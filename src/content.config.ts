@@ -14,6 +14,8 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			// First frame of an animated heroImage: link previews and reduced motion use it.
+			heroStill: z.optional(image()),
 			tags: z.array(z.string()).default([]),
 		}),
 });

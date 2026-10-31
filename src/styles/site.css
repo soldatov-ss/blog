@@ -169,9 +169,12 @@ main.page {
 
 .hero-image {
 	max-width: 1080px;
-	margin: var(--space-16) 0 0;
+	margin: 0 auto;
 	border-radius: var(--radius-lg);
 	overflow: hidden;
+}
+.hero-image + .sr-article-head {
+	margin-top: var(--space-12);
 }
 .hero-image img {
 	display: block;
@@ -201,8 +204,17 @@ main.page {
 
 /* Contents: collapsed under the byline, one tap to open. */
 .toc {
+	max-width: 680px;
+	margin: var(--space-8) auto 0;
 	font-size: 16px;
 	line-height: 26px;
+}
+/* Without a cover, Contents sits right under the header seam; prose follows it closely either way. */
+.sr-article-head + .toc {
+	margin-top: var(--space-4);
+}
+.toc + .sr-prose {
+	margin-top: var(--space-8);
 }
 .toc summary {
 	cursor: pointer;

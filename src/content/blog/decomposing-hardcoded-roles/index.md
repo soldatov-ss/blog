@@ -2,6 +2,8 @@
 title: 'Decomposing hardcoded roles: rewriting access control in a Django app without breaking customers'
 description: 'How we replaced three hardcoded roles with 46 named permissions and customer-defined roles, and proved nothing changed before changing anything.'
 pubDate: '2026-10-31'
+heroImage: './cover.gif'
+heroStill: './cover-still.jpg'
 tags: ['django', 'python', 'architecture', 'access-control']
 ---
 
