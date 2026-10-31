@@ -1,11 +1,10 @@
 ---
-// Sirene article: ArticleHeader → contents → prose (CodeBlock) → sign-off → more essays → RSS.
+// Sirene article: cover → ArticleHeader → contents → prose (CodeBlock) → tags → more essays → RSS.
 import { getImage, Image } from 'astro:assets';
 import type { MarkdownHeading } from 'astro';
 import Divider from '../components/Divider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
-import { SITE_TITLE } from '../consts';
 import { markdownUrl, type Post, postUrl, readingMinutes } from '../posts';
 import Layout from './Layout.astro';
 
@@ -44,11 +43,8 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>
 		<div class="sr-byline">
-			<a class="sr-meta byline-author" href="/about/">
-				{SITE_TITLE}
-			</a>
 			<span class="sr-meta">
-				· <FormattedDate date={pubDate} />
+				<FormattedDate date={pubDate} />
 			</span>
 			<span class="sr-meta">· {readingMinutes(post)} min read</span>
 			{updatedDate && (
@@ -81,9 +77,6 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 
 	<footer class="article-end">
 		<Divider />
-		<p class="sign-off">
-			Written by <a href="/about/">{SITE_TITLE}</a>.
-		</p>
 		{tags.length > 0 && <TagList tags={tags} />}
 		{(newer || older) && (
 			<nav class="more" aria-label="More essays">
