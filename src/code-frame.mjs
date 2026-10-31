@@ -1,5 +1,5 @@
-// Shiki transformer: renders fenced code as the design system's CodeBlock
-// (serhiis-notes-design-system/components/CodeBlock): filename header, Copy button,
+// Shiki transformer: renders fenced code as Sirene's CodeBlock
+// (sirene-design-system/components/CodeBlock): filename · language bar, Copy button,
 // highlighted lines. Meta syntax: ```ts title="can.ts" {2-3,5}
 
 function parseMeta(raw = '') {
@@ -28,12 +28,12 @@ export const codeFrame = {
 	root(root) {
 		const { title } = parseMeta(this.options.meta?.__raw);
 		const lang = this.options.lang;
-		const label = title ?? (lang === 'plaintext' || lang === 'text' ? '' : lang);
+		const label = [title, lang === 'plaintext' || lang === 'text' ? '' : lang].filter(Boolean).join(' · ');
 		root.children = [
-			el('figure', { className: ['sn-code'] }, [
-				el('figcaption', { className: ['sn-code__head'] }, [
-					el('span', {}, [text(label)]),
-					el('button', { className: ['sn-code__copy'], type: 'button' }, [text('Copy')]),
+			el('figure', { className: ['sr-code'] }, [
+				el('figcaption', { className: ['sr-code__bar'] }, [
+					el('span', { className: ['sr-meta'] }, [text(label)]),
+					el('button', { className: ['sr-code__copy', 'sr-meta'], type: 'button' }, [text('Copy')]),
 				]),
 				...root.children,
 			]),

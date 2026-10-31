@@ -1,0 +1,35 @@
+---
+// Sirene Nav: sirene-design-system/components/Nav
+import HeaderLink from './HeaderLink.astro';
+---
+
+<nav class="sr-nav" aria-label="Main">
+	<a class="sr-nav__mark" href="/">Serhii <em>Soldatov</em></a>
+	<div class="sr-nav__links">
+		<HeaderLink href="/blog">Articles</HeaderLink>
+		<HeaderLink href="/about">About</HeaderLink>
+	</div>
+	<button class="sr-btn sr-btn--ghost theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
+		<svg class="moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+			<path d="M13 9.5A5.5 5.5 0 1 1 6.5 3 4.5 4.5 0 0 0 13 9.5Z"></path>
+		</svg>
+		<svg class="sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+			<circle cx="8" cy="8" r="3"></circle>
+			<path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"></path>
+		</svg>
+	</button>
+	<a class="sr-btn sr-btn--primary nav-subscribe" href="/rss.xml">Subscribe</a>
+</nav>
+
+<script>
+	// No data-theme means "follow the OS" (tokens.css handles that); a click pins the opposite theme.
+	const root = document.documentElement;
+	const isNight = () =>
+		root.dataset.theme ? root.dataset.theme === 'coliseum' : matchMedia('(prefers-color-scheme: dark)').matches;
+	document.getElementById('theme-toggle')?.addEventListener('click', () => {
+		root.dataset.theme = isNight() ? 'silk' : 'coliseum';
+		try {
+			localStorage.setItem('theme', root.dataset.theme);
+		} catch {}
+	});
+</script>

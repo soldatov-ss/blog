@@ -4,11 +4,12 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={`About · ${SITE_TITLE}`} description="About Serhii Soldatov.">
-	<header class="page-head">
-		<p class="eyebrow">About</p>
-		<h1>Hi, I'm <em>Serhii</em></h1>
+	<header class="sr-article-head">
+		<span class="sr-eyebrow">About</span>
+		<h1 class="sr-display">Hi, I'm <em>Serhii</em></h1>
+		<hr class="sr-seam" />
 	</header>
-	<div class="prose">
+	<div class="sr-prose">
 		<!-- TODO: replace with your own bio -->
 		<p>
 			I'm a software engineer. This blog is where I write about the things I build, the tools I use,
@@ -20,11 +21,3 @@ import Layout from '../layouts/Layout.astro';
 		</p>
 	</div>
 </Layout>
-
-<style>
-	.page-head {
-		max-width: var(--prose-width);
-		margin: 0 auto;
-		padding: 96px 0 32px;
-	}
-</style>

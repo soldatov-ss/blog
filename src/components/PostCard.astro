@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+// Sirene PostCard: sirene-design-system/components/PostCard (stitched patch, no cover image)
 import type { CollectionEntry } from 'astro:content';
 import { readingTime } from '../consts';
 import FormattedDate from './FormattedDate.astro';
@@ -9,78 +9,15 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, heroImage, tags } = post.data;
+const { title, description, pubDate, tags } = post.data;
 ---
 
-<article>
-	<a class="cover" href={`/blog/${post.id}/`} tabindex="-1" aria-hidden="true">
-		{heroImage ? <Image width={720} height={400} src={heroImage} alt="" /> : <div class="wash"></div>}
-	</a>
-	<div class="body">
-		<p class="meta"><FormattedDate date={pubDate} /> · {readingTime(post.body)}</p>
-		<h3><a href={`/blog/${post.id}/`}>{title}</a></h3>
-		<p class="desc">{description}</p>
-		{tags.length > 0 && (
-			<div class="tags">
-				{tags.map((tag) => <a class="tag" href={`/tags/${tag}/`}>{tag}</a>)}
-			</div>
-		)}
+<a class="sr-card sr-stitched" href={`/blog/${post.id}/`}>
+	{tags[0] && <span class="sr-eyebrow">{tags[0]}</span>}
+	<h3 class="sr-subheading">{title}</h3>
+	<p class="sr-card__excerpt">{description}</p>
+	<div class="sr-card__foot">
+		<span class="sr-meta"><FormattedDate date={pubDate} /></span>
+		<span class="sr-meta">· {readingTime(post.body).replace(' read', '')}</span>
 	</div>
-</article>
-
-<style>
-	article {
-		display: flex;
-		flex-direction: column;
-		background: var(--paper);
-		border-radius: var(--radius-card);
-		box-shadow: var(--border) 0 0 0 1px;
-		overflow: hidden;
-		transition: box-shadow 0.2s ease;
-	}
-	article:hover {
-		box-shadow: var(--accent) 0 0 0 1px;
-	}
-	.cover {
-		display: block;
-		aspect-ratio: 9 / 5;
-	}
-	.cover img,
-	.wash {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 0;
-	}
-	.wash {
-		background: var(--dawn-wash);
-		opacity: 0.85;
-	}
-	.body {
-		padding: 24px 28px 28px;
-	}
-	.meta {
-		margin: 0 0 8px;
-	}
-	h3 {
-		margin: 0 0 8px;
-	}
-	h3 a {
-		color: var(--heading);
-		text-decoration: none;
-	}
-	h3 a:hover {
-		color: var(--accent-text);
-	}
-	.desc {
-		margin: 0;
-		font-size: 16px;
-		line-height: 1.6;
-	}
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-		margin-top: 16px;
-	}
-</style>
+</a>

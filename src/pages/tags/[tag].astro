@@ -25,20 +25,10 @@ const { posts } = Astro.props;
 
 <Layout title={`#${tag} · ${SITE_TITLE}`} description={`Articles tagged ${tag}.`}>
 	<header class="page-head">
-		<p class="eyebrow">Tag · {posts.length} {posts.length === 1 ? 'article' : 'articles'}</p>
-		<h1>{tag}</h1>
-		<a href="/blog">← All articles</a>
+		<span class="sr-eyebrow">Tag · {posts.length} {posts.length === 1 ? 'article' : 'articles'}</span>
+		<h1 class="sr-display">{tag}</h1>
+		<div><a class="sr-btn sr-btn--outline" href="/blog">All articles</a></div>
+		<hr class="sr-seam" />
 	</header>
 	<PostGrid posts={posts} />
 </Layout>
-
-<style>
-	.page-head {
-		padding: 96px 0 48px;
-	}
-	.page-head a {
-		font-size: 16px;
-		color: var(--accent-text);
-		text-decoration: none;
-	}
-</style>

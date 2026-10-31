@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import PostGrid from '../../components/PostGrid.astro';
+import TagList from '../../components/TagList.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
 
@@ -12,24 +13,10 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 
 <Layout title={`Articles · ${SITE_TITLE}`} description="All articles on software engineering.">
 	<header class="page-head">
-		<p class="eyebrow">{posts.length} articles</p>
-		<h1>Articles</h1>
-		{tags.length > 0 && (
-			<div class="tags">
-				{tags.map((tag) => <a class="tag" href={`/tags/${tag}/`}>{tag}</a>)}
-			</div>
-		)}
+		<span class="sr-eyebrow">{posts.length} articles</span>
+		<h1 class="sr-display">Articles</h1>
+		{tags.length > 0 && <TagList tags={tags} />}
+		<hr class="sr-seam" />
 	</header>
 	<PostGrid posts={posts} />
 </Layout>
-
-<style>
-	.page-head {
-		padding: 96px 0 48px;
-	}
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-	}
-</style>

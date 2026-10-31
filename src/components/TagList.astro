@@ -1,0 +1,17 @@
+---
+// Sirene Tag: sirene-design-system/components/Tag
+interface Props {
+	tags: string[];
+	current?: string;
+}
+
+const { tags, current } = Astro.props;
+---
+
+<div class="tag-list">
+	{tags.map((tag) => (
+		<a class="sr-tag" href={`/tags/${tag}/`} aria-current={tag === current ? 'page' : undefined}>
+			{tag}
+		</a>
+	))}
+</div>

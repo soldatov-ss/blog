@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-10-31T13:20:11.163Z",
+        "reason": "Sirene design system README specifies Fraunces (SOFT 100) as the display face; Claude decided from that spec, not user-confirmed"
+      }
+    ]
+  }
+}

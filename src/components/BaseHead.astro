@@ -28,14 +28,12 @@ const { title, description, image = FallbackImage } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Set theme before paint to avoid a flash. Saved choice wins, else follow the OS. -->
+<!-- Apply a saved theme before paint. With none, tokens.css follows prefers-color-scheme. -->
 <script is:inline>
-	let saved = null;
 	try {
-		saved = localStorage.getItem('theme');
+		const saved = localStorage.getItem('theme');
+		if (saved === 'silk' || saved === 'coliseum') document.documentElement.dataset.theme = saved;
 	} catch {}
-	document.documentElement.dataset.theme =
-		saved ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 </script>
 
 <!-- Canonical URL -->
