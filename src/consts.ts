@@ -4,6 +4,14 @@
 export const SITE_TITLE = 'Serhii Soldatov';
 export const SITE_DESCRIPTION = 'Notes and essays on building software.';
 
-export function readingTime(body = '') {
-	return `${Math.max(1, Math.round(body.split(/\s+/).length / 220))} min read`;
-}
+// Main sections, shared by Nav and Footer.
+export const NAV_LINKS = [
+	{ href: '/blog', label: 'Articles' },
+	{ href: '/about', label: 'About' },
+];
+
+// Theme vocabulary, shared by the pre-paint restore (BaseHead) and the toggle (Nav).
+// Must match the [data-theme] selectors in sirene-design-system/tokens.css.
+export const THEME_KEY = 'theme';
+export const DAY_THEME = 'silk';
+export const NIGHT_THEME = 'coliseum';

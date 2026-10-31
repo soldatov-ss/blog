@@ -1,21 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
 import PostGrid from '../../components/PostGrid.astro';
 import TagList from '../../components/TagList.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
+import { getPosts, tagsOf } from '../../posts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+const posts = await getPosts();
+const tags = tagsOf(posts);
 ---
 
 <Layout title={`Articles · ${SITE_TITLE}`} description="All articles on software engineering.">
 	<header class="page-head">
-		<span class="sr-eyebrow">{posts.length} articles</span>
 		<h1 class="sr-display">Articles</h1>
-		{tags.length > 0 && <TagList tags={tags} />}
+		<p class="sr-meta">{posts.length} {posts.length === 1 ? 'essay' : 'essays'}, newest first</p>
+		{/* ponytail: a tag filter only helps once there are more posts than tags to pick from */}
+		{posts.length > 3 && <TagList tags={tags} />}
 		<hr class="sr-seam" />
 	</header>
 	<PostGrid posts={posts} />

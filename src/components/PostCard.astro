@@ -1,23 +1,26 @@
 ---
-// Sirene PostCard: sirene-design-system/components/PostCard (stitched patch, no cover image)
-import type { CollectionEntry } from 'astro:content';
-import { readingTime } from '../consts';
+// Sirene PostCard: sirene-design-system/components/PostCard (stitched patch, no cover image).
+// The link sits on the title only (short accessible name); its ::after stretches over the card.
+import { type Post, postUrl, readingMinutes } from '../posts';
 import FormattedDate from './FormattedDate.astro';
 
 interface Props {
-	post: CollectionEntry<'blog'>;
+	post: Post;
+	/** The lead essay on the home page: wider, larger title, lede-sized excerpt. */
+	featured?: boolean;
 }
 
-const { post } = Astro.props;
-const { title, description, pubDate, tags } = post.data;
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate } = post.data;
 ---
 
-<a class="sr-card sr-stitched" href={`/blog/${post.id}/`}>
-	{tags[0] && <span class="sr-eyebrow">{tags[0]}</span>}
-	<h3 class="sr-subheading">{title}</h3>
+<article class:list={['sr-card', 'sr-stitched', { 'sr-card--featured': featured }]}>
+	<h2 class={featured ? 'sr-heading' : 'sr-subheading'}>
+		<a class="sr-card__link" href={postUrl(post)}>{title}</a>
+	</h2>
 	<p class="sr-card__excerpt">{description}</p>
 	<div class="sr-card__foot">
 		<span class="sr-meta"><FormattedDate date={pubDate} /></span>
-		<span class="sr-meta">· {readingTime(post.body).replace(' read', '')}</span>
+		<span class="sr-meta">· {readingMinutes(post)} min read</span>
 	</div>
-</a>
+</article>

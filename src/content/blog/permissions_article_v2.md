@@ -1,7 +1,7 @@
 ---
-title: 'Decomposing Hardcoded Roles: Rewriting Access Control in a Django App Without Breaking Customers'
+title: 'Decomposing hardcoded roles: rewriting access control in a Django app without breaking customers'
 description: 'How we replaced three hardcoded roles with 46 named permissions and customer-defined roles, and proved nothing changed before changing anything.'
-pubDate: 'Oct 31 2026'
+pubDate: '2026-10-31'
 tags: ['django', 'python', 'architecture', 'access-control']
 ---
 
@@ -11,9 +11,7 @@ Over about three and a half months we replaced those roles with a catalog of 46 
 
 Here is how we did it, and the rule that kept production safe throughout: prove nothing changed, then change things.
 
----
-
-## The Legacy Problem: One Question, Four Places to Answer It
+## The legacy problem: one question, four places to answer it
 
 Each organization membership stored one of three role strings, and access decisions were role predicates like `is_organization_admin` or `is_light_user`. Each of them asked "which role are you?", never "what are you allowed to do?".
 
@@ -32,9 +30,7 @@ On top of the all-or-nothing admin, this created three more problems:
 
 Replacing the role checks and introducing custom roles in one step would have made regressions difficult to detect. Before changing the authorization model, we needed a way to prove what the application allowed (and what it denied) today.
 
----
-
-## The Arc: How We Got There
+## The arc: how we got there
 
 We split the project into five phases:
 
@@ -44,9 +40,7 @@ We split the project into five phases:
 4. **Custom roles:** let customers define roles from the catalog and assign them, behind a per-organization feature flag.
 5. **Light user decomposition:** express restricted-user access through the new model, so customers can build roles like "a light user who can also see workflows".
 
----
-
-## Prove Nothing Changed Before Changing Anything
+## Prove nothing changed before changing anything
 
 We wanted to replace the authorization mechanism without changing what customers could do. Instead of hiding the refactor behind a feature flag, we built an allow/deny test grid for every registered permission, and the grid staying green was the proof.
 
@@ -71,9 +65,7 @@ def test_registry_matches_grid():
 
 The feature flag came back only for custom roles, the first change customers could actually see.
 
----
-
-## Separating Roles from Relationships
+## Separating roles from relationships
 
 Not every access question is about roles. "Can this role delete workflows?" and "Is this user the lead of this workflow?" are different questions, so we kept them apart:
 
@@ -96,9 +88,7 @@ Relationship checks stayed exactly as they were. That kept the refactor small, a
 
 One more decision removed a whole class of bugs: the admin role holds every member permission plus the admin-only ones, so no check needs an extra "or is admin" branch.
 
----
-
-## Defining the Catalog: From Code to Frontend
+## Defining the catalog: from code to frontend
 
 Every permission is declared in code as a catalog entry. An idempotent seed command syncs the catalog to the database on every deploy.
 
@@ -125,9 +115,7 @@ The catalog has three kinds of codes, and this example touches two of them:
 
 The `requires` list defines dependencies between permissions. Ticking "View all teams" in the role editor also ticks the Workspace and Teams pages it depends on, and the server rejects any role that holds a code without its requirements.
 
----
-
-## The Data Model
+## The data model
 
 Three tables carry the whole system:
 
@@ -135,7 +123,7 @@ Three tables carry the whole system:
 * `Role`: a named set of permissions. System roles (`admin`, `member`, `light_user`) have no organization and are shared by everyone, while custom roles belong to one customer organization. Each role has a stable `code` that identity providers can map onto.
 * `RolePermission`: the join table mapping permissions to roles.
 
-```
+```text title="Role ↔ Permission" alt="Diagram: Role and Permission are many-to-many, joined by the RolePermission table (role_id, permission_id)."
        +-------------------+             +-----------------------+
        |       Role        |             |      Permission       |
        +-------------------+             +-----------------------+
@@ -156,7 +144,7 @@ Three tables carry the whole system:
 
 Memberships still store the old role string, which resolves to the matching system role. A custom role replaces it only on a `member` membership in an organization with custom roles enabled, so organizations without the flag see no change at all. Every change to roles, their permissions and role assignments is recorded with django-simple-history.
 
-### Granularity Strategy: Start Coarse
+### Granularity strategy: start coarse
 
 We started with coarse permissions and split them only when the existing authorization logic required a distinction.
 
@@ -164,21 +152,19 @@ Splitting a permission later is relatively straightforward. Merging permissions 
 
 That's why API keys, folders, members and teams ended up with a single `*.manage` permission rather than separate edit and delete permissions. Running workflows needed finer distinctions, so we split those actions.
 
-### New Permissions vs. Saved Custom Roles
+### New permissions vs. saved custom roles
 
 Once customers save roles, every new permission raises a question: should existing custom roles get it? We can't know whether a customer meant a role to be powerful or locked down, so the seed never touches custom roles.
 
 Instead, a new permission reaches them through an explicit, reversible data migration that pins it to an existing one. When we split stopping a running workflow out of editing it, every custom role that could already edit (and so could already stop) received the new stop permission. Nobody gained or lost a power.
 
-### Performance Controls
+### Performance controls
 
 Permission checks can happen many times during a single request, so we resolve the user's effective permission set once per request and memoize it on the user object.
 
 We also deliberately left the permission tables out of ORM-level caching, so a role edit takes effect on the next request without a cache-invalidation mechanism.
 
----
-
-## Decomposing the Light User
+## Decomposing the light user
 
 Admin and member mostly differed in _which_ checks they passed. The light user was different: a separate code path with its own branches and screens, making it the hardest of the three roles to fold into the permission system.
 
@@ -188,9 +174,7 @@ The key was identifying the light user's defining trait: they only see content t
 
 Customers can now create a "near light user": a custom role that leaves this permission disabled while adding whatever other capabilities they need. The real light user role behaves exactly as before, and the change needed no schema migration.
 
----
-
-## Frontend Controls & User Experience
+## Frontend controls and user experience
 
 The frontend needs to reflect the backend's authorization decisions without becoming a second source of truth.
 
@@ -202,9 +186,7 @@ The frontend needs to reflect the backend's authorization decisions without beco
 
 - **Users can't change their own role, not even admins.** Otherwise a custom role allowed to manage members could promote itself to admin.
 
----
-
-## Lessons Learned
+## Lessons learned
 
 The biggest lesson was to separate the behavior-preserving refactor from the product change. We replaced the authorization mechanism first, proven by a deny-heavy test grid, then introduced custom roles behind a feature flag.
 

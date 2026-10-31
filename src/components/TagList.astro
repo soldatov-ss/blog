@@ -1,5 +1,7 @@
 ---
 // Sirene Tag: sirene-design-system/components/Tag
+import { tagLabel, tagUrl } from '../posts';
+
 interface Props {
 	tags: string[];
 	current?: string;
@@ -8,10 +10,12 @@ interface Props {
 const { tags, current } = Astro.props;
 ---
 
-<div class="tag-list">
+<ul class="tag-list" aria-label="Tags">
 	{tags.map((tag) => (
-		<a class="sr-tag" href={`/tags/${tag}/`} aria-current={tag === current ? 'page' : undefined}>
-			{tag}
-		</a>
+		<li>
+			<a class="sr-tag" href={tagUrl(tag)} aria-current={tag === current ? 'page' : undefined}>
+				{tagLabel(tag)}
+			</a>
+		</li>
 	))}
-</div>
+</ul>

@@ -1,15 +1,19 @@
 ---
 // Sirene Nav: sirene-design-system/components/Nav
-import HeaderLink from './HeaderLink.astro';
+import { NAV_LINKS } from '../consts';
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
+const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 ---
 
 <nav class="sr-nav" aria-label="Main">
 	<a class="sr-nav__mark" href="/">Serhii <em>Soldatov</em></a>
 	<div class="sr-nav__links">
-		<HeaderLink href="/blog">Articles</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
+		{NAV_LINKS.map(({ href, label }) => (
+			<a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>
+		))}
 	</div>
-	<button class="sr-btn sr-btn--ghost theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
+	<button class="sr-btn sr-btn--ghost theme-toggle" id="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false">
 		<svg class="moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
 			<path d="M13 9.5A5.5 5.5 0 1 1 6.5 3 4.5 4.5 0 0 0 13 9.5Z"></path>
 		</svg>
@@ -18,18 +22,31 @@ import HeaderLink from './HeaderLink.astro';
 			<path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"></path>
 		</svg>
 	</button>
-	<a class="sr-btn sr-btn--primary nav-subscribe" href="/rss.xml">Subscribe</a>
 </nav>
 
 <script>
-	// No data-theme means "follow the OS" (tokens.css handles that); a click pins the opposite theme.
+	import { DAY_THEME, NIGHT_THEME, THEME_KEY } from '../consts';
+
+	// No data-theme means "follow the OS" (tokens.css handles that). A click pins the opposite theme,
+	// unless that is what the OS already shows: then the pin is dropped and the page follows the OS again.
 	const root = document.documentElement;
-	const isNight = () =>
-		root.dataset.theme ? root.dataset.theme === 'coliseum' : matchMedia('(prefers-color-scheme: dark)').matches;
-	document.getElementById('theme-toggle')?.addEventListener('click', () => {
-		root.dataset.theme = isNight() ? 'silk' : 'coliseum';
+	const toggle = document.getElementById('theme-toggle');
+	const osNight = matchMedia('(prefers-color-scheme: dark)');
+	const isNight = () => (root.dataset.theme ? root.dataset.theme === NIGHT_THEME : osNight.matches);
+	const sync = () => toggle?.setAttribute('aria-pressed', String(isNight()));
+	sync();
+	osNight.addEventListener('change', sync);
+	toggle?.addEventListener('click', () => {
+		const night = !isNight();
 		try {
-			localStorage.setItem('theme', root.dataset.theme);
+			if (night === osNight.matches) {
+				delete root.dataset.theme;
+				localStorage.removeItem(THEME_KEY);
+			} else {
+				root.dataset.theme = night ? NIGHT_THEME : DAY_THEME;
+				localStorage.setItem(THEME_KEY, root.dataset.theme);
+			}
 		} catch {}
+		sync();
 	});
 </script>

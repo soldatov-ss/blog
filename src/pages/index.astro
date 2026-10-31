@@ -1,39 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
-import Divider from '../components/Divider.astro';
+import PostCard from '../components/PostCard.astro';
 import PostGrid from '../components/PostGrid.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Layout from '../layouts/Layout.astro';
+import { getPosts } from '../posts';
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 6);
+const [latest, ...rest] = await getPosts();
+const more = rest.slice(0, 4);
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<section class="hero">
-		<span class="sr-eyebrow">Writing on software</span>
-		<h1 class="sr-display">Notes from building software, <em>one</em> commit at a time</h1>
+		<!-- ponytail: hero copy is drafted from the one published essay; replace with your own words. -->
+		<h1 class="sr-display">Changing software that people <em>already</em> rely on</h1>
 		<p class="sr-lede">
-			I'm Serhii Soldatov. I write about software engineering: architecture, tooling, and what I learned
-			shipping real systems.
+			I'm Serhii Soldatov, a software engineer. I write long-form notes on architecture, access control and
+			refactoring live systems: what we changed, and how we proved nothing broke.
 		</p>
-		<div class="actions">
-			<a class="sr-btn sr-btn--primary" href="/blog">
-				Read the articles
-				<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-			</a>
-			<a class="sr-btn sr-btn--outline" href="/rss.xml">Subscribe via RSS</a>
-		</div>
 	</section>
 
-	<Divider />
+	{latest && (
+		<section class="section" aria-label="Latest essay">
+			<PostCard post={latest} featured />
+		</section>
+	)}
 
-	<section class="section">
-		<div class="section-head">
-			<h2 class="sr-heading">Latest articles</h2>
-			<a class="sr-link" href="/blog">All articles</a>
-		</div>
-		<PostGrid posts={posts} />
-	</section>
+	{more.length > 0 && (
+		<section class="section">
+			<div class="section-head">
+				<h2 class="sr-heading">More essays</h2>
+				<a class="sr-link" href="/blog/">All articles</a>
+			</div>
+			<PostGrid posts={more} />
+		</section>
+	)}
 </Layout>

@@ -1,33 +1,33 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
 import PostGrid from '../../components/PostGrid.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
+import { getPosts, type Post, tagLabel, tagsOf } from '../../posts';
 
 export async function getStaticPaths() {
-	const posts = (await getCollection('blog')).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-	);
-	const tags = new Set(posts.flatMap((post) => post.data.tags));
-	return [...tags].map((tag) => ({
+	const posts = await getPosts();
+	return tagsOf(posts).map((tag) => ({
 		params: { tag },
 		props: { posts: posts.filter((post) => post.data.tags.includes(tag)) },
 	}));
 }
 
 interface Props {
-	posts: CollectionEntry<'blog'>[];
+	posts: Post[];
 }
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
+const label = tagLabel(tag);
 ---
 
-<Layout title={`#${tag} · ${SITE_TITLE}`} description={`Articles tagged ${tag}.`}>
+<Layout title={`${label} · ${SITE_TITLE}`} description={`Articles tagged ${label}.`}>
 	<header class="page-head">
-		<span class="sr-eyebrow">Tag · {posts.length} {posts.length === 1 ? 'article' : 'articles'}</span>
-		<h1 class="sr-display">{tag}</h1>
-		<div><a class="sr-btn sr-btn--outline" href="/blog">All articles</a></div>
+		<h1 class="sr-display">{label}</h1>
+		<p class="sr-meta">
+			{posts.length} {posts.length === 1 ? 'essay' : 'essays'} tagged {label} ·
+			<a class="sr-link" href="/blog/">All articles</a>
+		</p>
 		<hr class="sr-seam" />
 	</header>
 	<PostGrid posts={posts} />
