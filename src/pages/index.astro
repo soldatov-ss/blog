@@ -1,6 +1,5 @@
 ---
 import PostCard from '../components/PostCard.astro';
-import PostGrid from '../components/PostGrid.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Layout from '../layouts/Layout.astro';
 import { getPosts } from '../posts';
@@ -35,7 +34,11 @@ const more = rest.slice(0, 4);
 					All articles
 				</a>
 			</div>
-			<PostGrid posts={more} />
+			<div class="post-grid">
+				{more.map((post) => (
+					<PostCard post={post} />
+				))}
+			</div>
 		</section>
 	)}
 </Layout>

@@ -21,3 +21,6 @@ export const tagLabel = (tag: string) => tag.replaceAll('-', ' ');
 
 /** At 220 words a minute, never less than 1. */
 export const readingMinutes = (post: Post) => Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));
+
+export const postsTagged = (posts: Post[], tag: string) => posts.filter((post) => post.data.tags.includes(tag));
+export const essayCount = (n: number) => `${n} ${n === 1 ? 'essay' : 'essays'}`;

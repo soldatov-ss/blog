@@ -4,16 +4,15 @@ import { tagLabel, tagUrl } from '../posts';
 
 interface Props {
 	tags: string[];
-	current?: string;
 }
 
-const { tags, current } = Astro.props;
+const { tags } = Astro.props;
 ---
 
 <ul class="tag-list" aria-label="Tags">
 	{tags.map((tag) => (
 		<li>
-			<a class="sr-tag" href={tagUrl(tag)} aria-current={tag === current ? 'page' : undefined}>
+			<a class="sr-tag" href={tagUrl(tag)}>
 				{tagLabel(tag)}
 			</a>
 		</li>

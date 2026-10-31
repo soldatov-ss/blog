@@ -1,14 +1,14 @@
 ---
-import PostGrid from '../../components/PostGrid.astro';
+import PostCard from '../../components/PostCard.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
-import { getPosts, type Post, tagLabel, tagsOf } from '../../posts';
+import { essayCount, getPosts, type Post, postsTagged, tagLabel, tagsOf } from '../../posts';
 
 export async function getStaticPaths() {
 	const posts = await getPosts();
 	return tagsOf(posts).map((tag) => ({
 		params: { tag },
-		props: { posts: posts.filter((post) => post.data.tags.includes(tag)) },
+		props: { posts: postsTagged(posts, tag) },
 	}));
 }
 
@@ -25,12 +25,16 @@ const label = tagLabel(tag);
 	<header class="page-head">
 		<h1 class="sr-display">{label}</h1>
 		<p class="sr-meta">
-			{posts.length} {posts.length === 1 ? 'essay' : 'essays'} tagged {label} ·
+			{essayCount(posts.length)} tagged {label} ·
 			<a class="sr-link" href="/blog/">
 				All articles
 			</a>
 		</p>
 		<hr class="sr-seam" />
 	</header>
-	<PostGrid posts={posts} />
+	<div class="post-grid">
+		{posts.map((post) => (
+			<PostCard post={post} />
+		))}
+	</div>
 </Layout>

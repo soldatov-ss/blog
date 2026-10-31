@@ -1,9 +1,9 @@
 ---
-import PostGrid from '../../components/PostGrid.astro';
+import PostCard from '../../components/PostCard.astro';
 import TagList from '../../components/TagList.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
-import { getPosts, tagsOf } from '../../posts';
+import { essayCount, getPosts, tagsOf } from '../../posts';
 
 const posts = await getPosts();
 const tags = tagsOf(posts);
@@ -12,12 +12,14 @@ const tags = tagsOf(posts);
 <Layout title={`Articles · ${SITE_TITLE}`} description="All articles on software engineering.">
 	<header class="page-head">
 		<h1 class="sr-display">Articles</h1>
-		<p class="sr-meta">
-			{posts.length} {posts.length === 1 ? 'essay' : 'essays'}, newest first
-		</p>
+		<p class="sr-meta">{essayCount(posts.length)}, newest first</p>
 		{/* ponytail: a tag filter only helps once there are more posts than tags to pick from */}
 		{posts.length > 3 && <TagList tags={tags} />}
 		<hr class="sr-seam" />
 	</header>
-	<PostGrid posts={posts} />
+	<div class="post-grid">
+		{posts.map((post) => (
+			<PostCard post={post} />
+		))}
+	</div>
 </Layout>

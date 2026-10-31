@@ -411,8 +411,7 @@ main.page {
 	color: var(--ink);
 	border-bottom: 1.5px solid var(--thread);
 }
-.sr-prose .sr-code,
-.sr-prose .sr-callout {
+.sr-prose .sr-code {
 	margin: var(--space-8) 0 0;
 }
 
