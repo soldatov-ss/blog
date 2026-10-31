@@ -12,7 +12,9 @@ const tags = tagsOf(posts);
 <Layout title={`Articles · ${SITE_TITLE}`} description="All articles on software engineering.">
 	<header class="page-head">
 		<h1 class="sr-display">Articles</h1>
-		<p class="sr-meta">{posts.length} {posts.length === 1 ? 'essay' : 'essays'}, newest first</p>
+		<p class="sr-meta">
+			{posts.length} {posts.length === 1 ? 'essay' : 'essays'}, newest first
+		</p>
 		{/* ponytail: a tag filter only helps once there are more posts than tags to pick from */}
 		{posts.length > 3 && <TagList tags={tags} />}
 		<hr class="sr-seam" />

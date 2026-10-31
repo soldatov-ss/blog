@@ -22,12 +22,7 @@ const { title, description, image, published, modified } = Astro.props;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
-/>
+<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('rss.xml', Astro.site)} />
 <meta name="generator" content={Astro.generator} />
 <!-- Copies of --surface-canvas (sirene-design-system/tokens.css): meta tags can't read CSS variables. -->
 <meta name="theme-color" content="#faf4ec" media="(prefers-color-scheme: light)" />

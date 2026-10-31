@@ -44,7 +44,9 @@ export const codeFrame = {
 		if (label) bar.push(el('span', { className: ['sr-meta'] }, [text(label)]));
 		if (!plain) {
 			bar.push(
-				el('button', { className: ['sr-code__copy', 'sr-meta'], type: 'button', 'aria-live': 'polite' }, [text('Copy')]),
+				el('button', { className: ['sr-code__copy', 'sr-meta'], type: 'button', 'aria-live': 'polite' }, [
+					text('Copy'),
+				]),
 			);
 		}
 		root.children = [

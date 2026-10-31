@@ -7,14 +7,20 @@ import { NAV_LINKS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<div class="sr-kilim" aria-hidden="true"></div>
 	<div class="sr-footer__inner">
 		<div>
-			<div class="sr-footer__mark">Serhii <em>Soldatov</em></div>
+			<div class="sr-footer__mark">
+				Serhii <em>Soldatov</em>
+			</div>
 			<p class="footer-tagline">{SITE_DESCRIPTION}</p>
 		</div>
 		<div class="footer-links">
-			{NAV_LINKS.map(({ href, label }) => <a href={href}>{label}</a>)}
+			{NAV_LINKS.map(({ href, label }) => (
+				<a href={href}>{label}</a>
+			))}
 			<a href="/rss.xml">RSS feed</a>
 		</div>
-		<p class="footer-copy">&copy; {new Date().getFullYear()} {SITE_TITLE}</p>
+		<p class="footer-copy">
+			&copy; {new Date().getFullYear()} {SITE_TITLE}
+		</p>
 	</div>
 	<div class="sr-fringe" aria-hidden="true"></div>
 </footer>

@@ -16,11 +16,15 @@ const { title, description, pubDate } = post.data;
 
 <article class:list={['sr-card', 'sr-stitched', { 'sr-card--featured': featured }]}>
 	<h2 class={featured ? 'sr-heading' : 'sr-subheading'}>
-		<a class="sr-card__link" href={postUrl(post)}>{title}</a>
+		<a class="sr-card__link" href={postUrl(post)}>
+			{title}
+		</a>
 	</h2>
 	<p class="sr-card__excerpt">{description}</p>
 	<div class="sr-card__foot">
-		<span class="sr-meta"><FormattedDate date={pubDate} /></span>
+		<span class="sr-meta">
+			<FormattedDate date={pubDate} />
+		</span>
 		<span class="sr-meta">· {readingMinutes(post)} min read</span>
 	</div>
 </article>

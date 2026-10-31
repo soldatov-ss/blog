@@ -1,4 +1,4 @@
-Sirene is the visual language of a personal software blog, borrowed from the coliseum of Sirene in *Clair Obscur: Expedition 33*: a Belle Époque world built from silk, ribbons, gold thread and woven rugs. Think of the page as cloth. Text and UI stay quiet and editorial, and the decoration comes from **how the cloth is sewn together**: seams, embroidery, stitched patches and a rug's fringe.
+Sirene is the visual language of a personal software blog, borrowed from the coliseum of Sirene in _Clair Obscur: Expedition 33_: a Belle Époque world built from silk, ribbons, gold thread and woven rugs. Think of the page as cloth. Text and UI stay quiet and editorial, and the decoration comes from **how the cloth is sewn together**: seams, embroidery, stitched patches and a rug's fringe.
 
 ## Principles
 
@@ -11,7 +11,7 @@ Sirene is the visual language of a personal software blog, borrowed from the col
 
 - First person, singular: "I tried…", "here's what broke". Address the reader as "you".
 - Sentence case everywhere except `caption` eyebrows, which are uppercase.
-- Titles can italicise one word for emphasis, e.g. "Roles are seams, *not* walls". That word turns `gold`.
+- Titles can italicise one word for emphasis, e.g. "Roles are seams, _not_ walls". That word turns `gold`.
 - Textile metaphors are welcome in moderation ("baste first, sew later"). No emoji.
 
 ## Color
@@ -35,13 +35,13 @@ Two themes share every token name: **Silk** (light, the default) and **Coliseum 
 
 ## Textile ornament
 
-| Ornament | Class | Where |
-|---|---|---|
-| Running stitch | `.sr-seam` | Section breaks, under article headers |
-| Floret divider | `.sr-divider` | End of article, hero to post list |
-| Stitched patch | `.sr-stitched` | Post cards (dashed `thread` 8px inside the edge) |
-| Cross-stitch band | `.sr-embroidery` | Once per page at most, `coral` |
-| Kilim band + fringe | `.sr-kilim`, `.sr-fringe` | Footer only: the rug's end |
+| Ornament            | Class                     | Where                                            |
+| ------------------- | ------------------------- | ------------------------------------------------ |
+| Running stitch      | `.sr-seam`                | Section breaks, under article headers            |
+| Floret divider      | `.sr-divider`             | End of article, hero to post list                |
+| Stitched patch      | `.sr-stitched`            | Post cards (dashed `thread` 8px inside the edge) |
+| Cross-stitch band   | `.sr-embroidery`          | Once per page at most, `coral`                   |
+| Kilim band + fringe | `.sr-kilim`, `.sr-fringe` | Footer only: the rug's end                       |
 
 Don't use more than two ornament kinds in one viewport, and don't put ornament under text.
 

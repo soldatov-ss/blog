@@ -26,18 +26,30 @@ const sections = headings.filter((heading) => heading.depth === 2);
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>
 		<div class="sr-byline">
-			<a class="sr-meta byline-author" href="/about/">{SITE_TITLE}</a>
-			<span class="sr-meta">· <FormattedDate date={pubDate} /></span>
+			<a class="sr-meta byline-author" href="/about/">
+				{SITE_TITLE}
+			</a>
+			<span class="sr-meta">
+				· <FormattedDate date={pubDate} />
+			</span>
 			<span class="sr-meta">· {readingMinutes(post)} min read</span>
-			{updatedDate && <span class="sr-meta">· Updated <FormattedDate date={updatedDate} /></span>}
+			{updatedDate && (
+				<span class="sr-meta">
+					· Updated <FormattedDate date={updatedDate} />
+				</span>
+			)}
 		</div>
 		<hr class="sr-seam" />
 		{sections.length > 2 && (
 			<details class="toc">
-				<summary>Contents <span class="toc__count">{sections.length} sections</span></summary>
+				<summary>
+					Contents <span class="toc__count">{sections.length} sections</span>
+				</summary>
 				<ol>
 					{sections.map((heading) => (
-						<li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+						<li>
+							<a href={`#${heading.slug}`}>{heading.text}</a>
+						</li>
 					))}
 				</ol>
 			</details>
@@ -77,9 +89,13 @@ const sections = headings.filter((heading) => heading.depth === 2);
 			</nav>
 		)}
 		<section class="subscribe" aria-labelledby="subscribe-title">
-			<h2 class="sr-heading" id="subscribe-title">New essays, <em>whenever</em> they're ready</h2>
+			<h2 class="sr-heading" id="subscribe-title">
+				New essays, <em>whenever</em> they're ready
+			</h2>
 			<p>Follow along in any feed reader. No tracking, no email needed.</p>
-			<a class="sr-btn sr-btn--outline" href="/rss.xml">RSS feed</a>
+			<a class="sr-btn sr-btn--outline" href="/rss.xml">
+				RSS feed
+			</a>
 		</section>
 	</footer>
 </Layout>
