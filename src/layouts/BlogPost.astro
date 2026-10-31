@@ -1,11 +1,10 @@
 ---
-// Sirene article: ArticleHeader → contents → prose (CodeBlock) → sign-off → more essays → RSS.
-import { Image } from 'astro:assets';
+// Sirene article: cover → ArticleHeader → contents → prose (CodeBlock) → tags → more essays → RSS.
+import { getImage, Image } from 'astro:assets';
 import type { MarkdownHeading } from 'astro';
 import Divider from '../components/Divider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
-import { SITE_TITLE } from '../consts';
 import { markdownUrl, type Post, postUrl, readingMinutes } from '../posts';
 import Layout from './Layout.astro';
 
@@ -17,27 +16,35 @@ interface Props {
 }
 
 const { post, headings, newer, older } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage, tags } = post.data;
+const { title, description, pubDate, updatedDate, heroImage, heroStill, tags } = post.data;
 const sections = headings.filter((heading) => heading.depth === 2);
+// An animated cover holds still (its heroStill frame) for readers who ask for reduced motion.
+const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, format: 'webp' }));
 ---
 
 <Layout
 	title={title}
 	description={description}
-	image={heroImage}
+	image={heroStill ?? heroImage}
 	published={pubDate}
 	modified={updatedDate}
 	markdown={markdownUrl(post)}
 >
+	{heroImage && (
+		<figure class="hero-image sr-stitched">
+			<picture>
+				{stillCover && <source srcset={stillCover.src} media="(prefers-reduced-motion: reduce)" />}
+				<Image src={heroImage} width={1080} alt="" loading="eager" />
+			</picture>
+		</figure>
+	)}
+
 	<header class="sr-article-head">
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>
 		<div class="sr-byline">
-			<a class="sr-meta byline-author" href="/about/">
-				{SITE_TITLE}
-			</a>
 			<span class="sr-meta">
-				· <FormattedDate date={pubDate} />
+				<FormattedDate date={pubDate} />
 			</span>
 			<span class="sr-meta">· {readingMinutes(post)} min read</span>
 			{updatedDate && (
@@ -47,26 +54,21 @@ const sections = headings.filter((heading) => heading.depth === 2);
 			)}
 		</div>
 		<hr class="sr-seam" />
-		{sections.length > 2 && (
-			<details class="toc">
-				<summary>
-					Contents <span class="toc__count">{sections.length} sections</span>
-				</summary>
-				<ol>
-					{sections.map((heading) => (
-						<li>
-							<a href={`#${heading.slug}`}>{heading.text}</a>
-						</li>
-					))}
-				</ol>
-			</details>
-		)}
 	</header>
 
-	{heroImage && (
-		<figure class="hero-image sr-stitched">
-			<Image src={heroImage} width={1080} height={540} alt="" />
-		</figure>
+	{sections.length > 2 && (
+		<details class="toc">
+			<summary>
+				Contents <span class="toc__count">{sections.length} sections</span>
+			</summary>
+			<ol>
+				{sections.map((heading) => (
+					<li>
+						<a href={`#${heading.slug}`}>{heading.text}</a>
+					</li>
+				))}
+			</ol>
+		</details>
 	)}
 
 	<article class="sr-prose">
@@ -75,9 +77,6 @@ const sections = headings.filter((heading) => heading.depth === 2);
 
 	<footer class="article-end">
 		<Divider />
-		<p class="sign-off">
-			Written by <a href="/about/">{SITE_TITLE}</a>.
-		</p>
 		{tags.length > 0 && <TagList tags={tags} />}
 		{(newer || older) && (
 			<nav class="more" aria-label="More essays">
