@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Renders /rss.xml as a readable page when opened in a browser. Colours are Sirene's tokens (tokens.css), copied
+<!-- Renders /rss.xml as a readable page when opened in a browser. Colours are copies of sirene-design-system/tokens.css,
      because this file is standalone. Feed readers ignore it. -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8" />

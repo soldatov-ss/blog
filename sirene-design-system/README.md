@@ -62,4 +62,4 @@ Draw thin line icons (1.4–1.6px stroke, round caps) in `currentColor`. The flo
 
 ## Consuming in a blog
 
-Load `components/bundle.css` (it imports the three Google Fonts) after the tokens. Put `class="sr"` on `<body>` and `data-theme="coliseum"` on `<html>` for dark mode (follow `prefers-color-scheme` by default). Component markup is plain HTML with no JavaScript, so it works in any static-site generator (Astro, Eleventy, Hugo, Next).
+Load `components/bundle.css` after the tokens; the fonts (Fraunces, Bricolage Grotesque, JetBrains Mono) are self-hosted by the site and fed in through `--font-fraunces`, `--font-bricolage` and `--font-jetbrains`. Put `class="sr"` on `<body>` and `data-theme="coliseum"` on `<html>` for dark mode (follow `prefers-color-scheme` by default). Component markup is plain HTML with no JavaScript, so it works in any static-site generator (Astro, Eleventy, Hugo, Next).

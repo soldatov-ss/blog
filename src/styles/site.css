@@ -1,9 +1,7 @@
 /* Page layout and article prose on top of Sirene (sirene-design-system/). Tokens only, no new colours. */
-:root { color-scheme: light dark; scrollbar-color: var(--thread) transparent; }
+:root { scrollbar-color: var(--thread) transparent; }
 /* The nav floats over the page: keep anchor targets and focused elements clear of it (WCAG 2.4.11). */
 html { scroll-padding-top: 112px; }
-[data-theme='silk'] { color-scheme: light; }
-[data-theme='coliseum'] { color-scheme: dark; }
 
 body {
 	margin: 0;

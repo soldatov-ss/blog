@@ -1,68 +1,29 @@
-/* Sirene — generated from tokens.json */
-:root, [data-theme="silk"] {
-  --surface-canvas: #faf4ec;
-  --surface-card: #fffaf3;
-  --surface-tint: #f3e6dc;
-  --surface-deep: #2a1520;
-  --ink: #2c1822;
-  --ink-soft: #5a4250;
-  --ink-muted: #745d6a;
-  --rose: #a8435a;
-  --on-rose: #fffaf3;
-  --rose-blush: #f3d3cf;
-  --coral: #e58a73;
-  --gold: #86601c;
-  --thread: #a37632;
-  --teal: #24686a;
-  --hairline: #e8d8c6;
+/* Sirene tokens: the one place colours live. Each colour is light-dark(Silk, Coliseum night).
+   color-scheme picks the side: the OS by default, or a theme pinned with data-theme on <html>.
+   Copies that can't read CSS variables: public/favicon.svg, public/rss.xsl, BaseHead.astro theme-color. */
+:root { color-scheme: light dark; }
+[data-theme="silk"] { color-scheme: light; }
+[data-theme="coliseum"] { color-scheme: dark; }
+:root {
+  --surface-canvas: light-dark(#faf4ec, #1b1117);
+  --surface-card: light-dark(#fffaf3, #251820);
+  --surface-tint: light-dark(#f3e6dc, #33212b);
+  --surface-deep: light-dark(#2a1520, #120b0f);
+  --ink: light-dark(#2c1822, #f7ece3);
+  --ink-soft: light-dark(#5a4250, #dcc7c9);
+  --ink-muted: light-dark(#745d6a, #ab949d);
+  --rose: light-dark(#a8435a, #ef94a2);
+  --on-rose: light-dark(#fffaf3, #1b1117);
+  --rose-blush: light-dark(#f3d3cf, #4a2632);
+  --coral: light-dark(#e58a73, #d97a66);
+  --gold: light-dark(#86601c, #e2bb6a);
+  --thread: light-dark(#a37632, #c99a4c);
+  --teal: light-dark(#24686a, #80c9c2);
+  --hairline: light-dark(#e8d8c6, #3d2a33);
   --on-deep: #f7ece3;
-  --on-deep-muted: #c7aeb6;
-  --focus-ring: #a8435a;
-  --shadow-patch: 0 1px 0 rgba(44,24,34,0.04), 0 10px 24px -14px rgba(84,36,52,0.22);
-}
-[data-theme="coliseum"] {
-  --surface-canvas: #1b1117;
-  --surface-card: #251820;
-  --surface-tint: #33212b;
-  --surface-deep: #120b0f;
-  --ink: #f7ece3;
-  --ink-soft: #dcc7c9;
-  --ink-muted: #ab949d;
-  --rose: #ef94a2;
-  --on-rose: #1b1117;
-  --rose-blush: #4a2632;
-  --coral: #d97a66;
-  --gold: #e2bb6a;
-  --thread: #c99a4c;
-  --teal: #80c9c2;
-  --hairline: #3d2a33;
-  --on-deep: #f7ece3;
-  --on-deep-muted: #ab949d;
-  --focus-ring: #ef94a2;
-  --shadow-patch: 0 1px 0 rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="silk"]) {
-    --surface-canvas: #1b1117;
-    --surface-card: #251820;
-    --surface-tint: #33212b;
-    --surface-deep: #120b0f;
-    --ink: #f7ece3;
-    --ink-soft: #dcc7c9;
-    --ink-muted: #ab949d;
-    --rose: #ef94a2;
-    --on-rose: #1b1117;
-    --rose-blush: #4a2632;
-    --coral: #d97a66;
-    --gold: #e2bb6a;
-    --thread: #c99a4c;
-    --teal: #80c9c2;
-    --hairline: #3d2a33;
-    --on-deep: #f7ece3;
-    --on-deep-muted: #ab949d;
-    --focus-ring: #ef94a2;
-    --shadow-patch: 0 1px 0 rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
-  }
+  --on-deep-muted: light-dark(#c7aeb6, #ab949d);
+  --focus-ring: light-dark(#a8435a, #ef94a2);
+  --shadow-patch: 0 1px 0 light-dark(rgba(44,24,34,0.04), rgba(0,0,0,0.3)), 0 10px 24px -14px light-dark(rgba(84,36,52,0.22), rgba(0,0,0,0.6));
 }
 :root {
   --space-1: 4px;

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
-	<!-- Sirene floret (Divider.astro), rose petals and gold heart; lighter on dark browser chrome. -->
+	<!-- Sirene floret (Divider.astro). Colours copy --rose / --gold from sirene-design-system/tokens.css. -->
 	<style>
 		.p { stroke: #a8435a; } .c { fill: #86601c; }
 		@media (prefers-color-scheme: dark) { .p { stroke: #ef94a2; } .c { fill: #e2bb6a; } }
