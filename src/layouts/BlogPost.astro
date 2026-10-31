@@ -1,84 +1,237 @@
 ---
-import { Image } from 'astro:assets';
+// Article page built from the Serhii's Notes design system (serhiis-notes-design-system/).
+// Recipe: Nav → ArticleHeader → Prose (+ CodeBlock, Callout) → Subscribe spotlight → Footer.
+import '../../serhiis-notes-design-system/tokens.css';
+import '../../serhiis-notes-design-system/components/bundle.css';
+import '../styles/paper.css';
+import { Font, Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import Footer from '../components/notes/Footer.astro';
+import Nav from '../components/notes/Nav.astro';
+import { SITE_TITLE } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { readingTime?: string };
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags = [], readingTime } = Astro.props;
+const topic = tags[0];
 ---
 
+<!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
+		<BaseHead title={title} description={description} image={heroImage} />
+		<Font cssVariable="--font-fraunces" preload />
+		<Font cssVariable="--font-bricolage" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
 	</head>
-
 	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<div class="last-updated-on">
-									Last updated on <FormattedDate date={updatedDate} />
-								</div>
-							)}
+		<div class="page">
+			<Nav />
+		</div>
+		<main class="page">
+			<header class="sn-article-head">
+				{topic && <a class="sn-eyebrow" href={`/tags/${topic}/`}>{topic}</a>}
+				<h1 class="sn-article-head__title">{title}</h1>
+				<p class="sn-article-head__dek">{description}</p>
+				<div class="sn-byline">
+					<span class="sn-avatar" aria-hidden="true">SS</span>
+					<div>
+						<div class="sn-byline__name">{SITE_TITLE}</div>
+						<div class="sn-meta">
+							<span><FormattedDate date={pubDate} /></span>
+							{readingTime && <span>{readingTime}</span>}
+							{updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}
 						</div>
-						<h1>{title}</h1>
-						<hr />
 					</div>
-					<slot />
 				</div>
+			</header>
+
+			{heroImage && (
+				<figure class="arch">
+					<Image src={heroImage} width={880} height={440} alt="" />
+				</figure>
+			)}
+
+			<article class="sn-prose">
+				<slot />
 			</article>
+
+			<section class="sn-spotlight" id="subscribe">
+				<span class="sn-eyebrow">Subscribe</span>
+				<h2 class="sn-spotlight__title">New notes, <em>whenever they're ready</em></h2>
+				<p class="sn-spotlight__text">
+					Long-form writing on architecture and shipping software. Follow along in any feed reader: no
+					tracking, no email needed.
+				</p>
+				<div><a class="sn-btn sn-btn--primary" href="/rss.xml">Subscribe via RSS</a></div>
+			</section>
 		</main>
 		<Footer />
+
+		<script>
+			for (const button of document.querySelectorAll<HTMLButtonElement>('.sn-code__copy')) {
+				button.addEventListener('click', async () => {
+					const lines = button.closest('.sn-code')?.querySelectorAll('.ln') ?? [];
+					await navigator.clipboard.writeText([...lines].map((line) => line.textContent).join('\n'));
+					button.textContent = 'Copied';
+					setTimeout(() => (button.textContent = 'Copy'), 2000);
+				});
+			}
+		</script>
 	</body>
 </html>
+
+<style is:global>
+	/* Fonts from fly.io.design.md in place of the design system's own. html:root outranks tokens.css's :root. */
+	html:root {
+		--font-display: var(--font-fraunces);
+		--font-text: var(--font-bricolage);
+		--font-ui: var(--font-bricolage);
+		--font-mono: var(--font-jetbrains-mono);
+	}
+	/* Light-mode surfaces from DESIGN (5).md: parchment canvas, white panels, Bone Mist for sunken areas. */
+	html:root:not([data-theme='dark']) {
+		--canvas: #fffcfc;
+		--surface: #ffffff;
+		--surface-sunken: #ecedf2;
+	}
+	/* Bricolage has no italic, so italic text-font lines use Fraunces italic instead of a faked slant. */
+	.sn-article-head__dek {
+		font-family: var(--font-display);
+	}
+
+	/* Shiki's css-variables theme → the design system's five code hues */
+	:root {
+		--astro-code-background: transparent;
+		--astro-code-foreground: var(--code-ink);
+		--astro-code-token-keyword: var(--code-keyword);
+		--astro-code-token-string: var(--code-string);
+		--astro-code-token-string-expression: var(--code-string);
+		--astro-code-token-function: var(--code-function);
+		--astro-code-token-constant: var(--code-number);
+		--astro-code-token-comment: var(--code-comment);
+		--astro-code-token-parameter: var(--code-ink);
+		--astro-code-token-punctuation: var(--code-ink);
+		--astro-code-token-link: var(--code-string);
+	}
+	.sn-code [style*='--astro-code-token-comment'] {
+		font-style: italic;
+	}
+	.sn-code code {
+		display: block;
+		min-width: max-content;
+	}
+	.sn-code .ln {
+		min-height: 23px;
+	}
+
+	.page {
+		max-width: var(--page-max);
+		margin: 0 auto;
+		padding-inline: var(--space-32);
+	}
+	main.page {
+		padding-top: var(--space-96);
+	}
+	.sn-eyebrow {
+		text-decoration: none;
+	}
+
+	.arch {
+		position: relative;
+		max-width: var(--wide);
+		margin: var(--space-64) auto 0;
+		border-radius: var(--radius-arch) var(--radius-arch) var(--radius-sm) var(--radius-sm);
+		overflow: hidden;
+	}
+	.arch img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.arch::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: inset 0 0 0 1px var(--gold);
+		pointer-events: none;
+	}
+
+	.sn-prose {
+		margin: var(--space-64) auto 0;
+	}
+	/* bundle.css's `.sn-prose p { margin: 0 }` outranks its own `> * + *` rhythm rule */
+	.sn-prose > p:not(:first-child) {
+		margin-top: var(--space-24);
+	}
+	.sn-prose > .sn-code {
+		margin: var(--space-32) 0 0;
+	}
+	.sn-code pre {
+		tab-size: 2;
+	}
+	.sn-prose ol {
+		padding-left: var(--space-24);
+	}
+	.sn-prose ol li::marker {
+		color: var(--muted);
+	}
+	.sn-prose li + li {
+		margin-top: var(--space-8);
+	}
+	.sn-prose img {
+		max-width: 100%;
+		height: auto;
+		border-radius: var(--radius-md);
+	}
+	.sn-prose table {
+		width: 100%;
+		border-collapse: collapse;
+		font: 400 16px/26px var(--font-text);
+	}
+	.sn-prose th,
+	.sn-prose td {
+		padding: var(--space-8) var(--space-12);
+		border-bottom: 1px solid var(--border);
+		text-align: left;
+	}
+	.sn-prose th {
+		font: 500 11px/16px var(--font-ui);
+		letter-spacing: 2.4px;
+		text-transform: uppercase;
+		color: var(--ink);
+	}
+	/* Code and tables break out of the 660px measure to `wide` (880px) when there is room. */
+	@media (min-width: 960px) {
+		.sn-prose > .sn-code,
+		.sn-prose > table {
+			margin-inline: calc((var(--measure) - var(--wide)) / 2);
+		}
+	}
+
+	.sn-spotlight {
+		max-width: var(--wide);
+		margin: var(--space-96) auto 0;
+	}
+	.sn-footer {
+		margin-top: var(--space-96);
+	}
+
+	@media (max-width: 640px) {
+		.page {
+			padding-inline: var(--space-16);
+		}
+		main.page {
+			padding-top: var(--space-64);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.sn-card,
+		.sn-btn {
+			transition: none;
+		}
+	}
+</style>

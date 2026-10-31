@@ -1,0 +1,42 @@
+---
+// Serhii's Notes Footer: serhiis-notes-design-system/components/Footer
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+---
+
+<footer class="sn-footer">
+	<div class="sn-footer__grid">
+		<div>
+			<p class="sn-footer__brand">{SITE_TITLE}</p>
+			<p class="desc">{SITE_DESCRIPTION}</p>
+		</div>
+		<div>
+			<h4>Writing</h4>
+			<ul>
+				<li><a href="/blog">Articles</a></li>
+				<li><a href="/rss.xml">RSS</a></li>
+			</ul>
+		</div>
+		<div>
+			<h4>Site</h4>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/about">About</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="sn-footer__base">&copy; {new Date().getFullYear()} {SITE_TITLE}</div>
+</footer>
+
+<style>
+	.sn-footer__grid,
+	.sn-footer__base {
+		margin-inline: auto;
+	}
+	.sn-footer__base {
+		max-width: var(--page-max);
+	}
+	.desc {
+		margin: 0;
+		max-width: 300px;
+	}
+</style>

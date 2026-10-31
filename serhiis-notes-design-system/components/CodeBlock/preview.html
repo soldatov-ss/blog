@@ -1,0 +1,13 @@
+<!-- @dsCard group="Article" height=300 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>CodeBlock — preview</title></head>
+<body>
+<div class="sn-pad">
+<figure class="sn-code" style="margin:0">
+  <figcaption class="sn-code__head"><span>permissions.ts</span><button class="sn-code__copy">Copy</button></figcaption>
+<pre><code><span class="ln"><span class="c">// A role is a named bundle of permissions</span></span><span class="ln"><span class="k">type</span> <span class="f">Permission</span> = <span class="s">"project:read"</span> | <span class="s">"project:delete"</span>;</span><span class="ln"> </span><span class="ln ln--hl"><span class="k">export function</span> <span class="f">can</span>(user: <span class="f">User</span>, p: <span class="f">Permission</span>) {</span><span class="ln ln--hl">  <span class="k">return</span> user.permissions.<span class="f">has</span>(p);</span><span class="ln">}</span><span class="ln"> </span><span class="ln"><span class="k">const</span> MAX_ROLES = <span class="n">12</span>;</span></code></pre>
+</figure>
+</div>
+</body>
+</html>

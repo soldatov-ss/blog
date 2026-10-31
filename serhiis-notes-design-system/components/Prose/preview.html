@@ -1,0 +1,19 @@
+<!-- @dsCard group="Article" height=760 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Prose — preview</title></head>
+<body>
+<div class="sn-pad">
+<article class="sn-prose">
+  <p>Permissions should describe what a user <strong>can do</strong>, not who they are. Once we accepted that, the <code>isAdmin</code> checks scattered across the codebase stopped looking like shortcuts and started looking like debt.</p>
+  <h2>Why hardcoded roles break</h2>
+  <p>Every new customer asked for "admin, but without billing". We answered with a new role each time — read the <a href="#">original RFC</a> for how that went.</p>
+  <ul><li>Roles multiplied faster than features.</li><li>Checks lived in three layers.</li><li>Nobody could answer "who can delete a project?"</li></ul>
+  <blockquote>A role is just a named bundle of permissions. Name the bundle last.</blockquote>
+  <hr>
+  <h3>The migration plan</h3>
+  <p>We shipped it in four steps, each reversible.</p>
+</article>
+</div>
+</body>
+</html>

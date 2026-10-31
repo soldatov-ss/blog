@@ -1,0 +1,15 @@
+---
+// Serhii's Notes Callout: serhiis-notes-design-system/components/Callout. Use in .mdx posts:
+// <Callout kind="tip">One or two short sentences.</Callout>
+interface Props {
+	kind?: 'note' | 'tip' | 'warn' | 'danger';
+}
+
+const LABELS = { note: 'Note', tip: 'Tip', warn: 'Warning', danger: 'Careful' };
+const { kind = 'note' } = Astro.props;
+---
+
+<aside class={`sn-callout sn-callout--${kind}`}>
+	<span class="sn-callout__label">{LABELS[kind]}</span>
+	<slot />
+</aside>

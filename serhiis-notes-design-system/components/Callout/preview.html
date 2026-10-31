@@ -1,0 +1,13 @@
+<!-- @dsCard group="Article" height=440 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Callout — preview</title></head>
+<body>
+<div class="sn-pad" style="display:flex;flex-direction:column;gap:16px">
+  <aside class="sn-callout sn-callout--note"><span class="sn-callout__label">Note</span><p>This post assumes Postgres 16 or newer.</p></aside>
+  <aside class="sn-callout sn-callout--tip"><span class="sn-callout__label">Tip</span><p>Seed permissions from existing roles first; delete the roles last.</p></aside>
+  <aside class="sn-callout sn-callout--warn"><span class="sn-callout__label">Warning</span><p>The backfill locks the table for ~2s per million rows.</p></aside>
+  <aside class="sn-callout sn-callout--danger"><span class="sn-callout__label">Careful</span><p>Dropping the <code class="sn-code-inline">role</code> column is irreversible.</p></aside>
+</div>
+</body>
+</html>
