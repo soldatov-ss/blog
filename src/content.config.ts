@@ -16,6 +16,8 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			// First frame of an animated heroImage: link previews and reduced motion use it.
 			heroStill: z.optional(image()),
+			// Where the essay first appeared, if elsewhere: becomes rel=canonical so search engines credit the original.
+			canonicalUrl: z.url().optional(),
 			tags: z.array(z.string()).default([]),
 		}),
 });

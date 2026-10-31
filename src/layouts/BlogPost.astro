@@ -16,7 +16,7 @@ interface Props {
 }
 
 const { post, headings, newer, older } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage, heroStill, tags } = post.data;
+const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
 const sections = headings.filter((heading) => heading.depth === 2);
 // An animated cover holds still (its heroStill frame) for readers who ask for reduced motion.
 const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, format: 'webp' }));
@@ -29,6 +29,7 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 	published={pubDate}
 	modified={updatedDate}
 	markdown={markdownUrl(post)}
+	canonical={canonicalUrl}
 >
 	{heroImage && (
 		<figure class="hero-image sr-stitched">
@@ -77,6 +78,11 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 
 	<footer class="article-end">
 		<Divider />
+		{canonicalUrl && (
+			<p class="sr-meta original">
+				Originally published on <a href={canonicalUrl}>{new URL(canonicalUrl).hostname.replace(/^www\./, '')}</a>
+			</p>
+		)}
 		{tags.length > 0 && <TagList tags={tags} />}
 		{(newer || older) && (
 			<nav class="more" aria-label="More essays">

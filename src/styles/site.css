@@ -571,3 +571,13 @@ main.page {
 	margin-inline: auto;
 	max-width: 680px;
 }
+
+/* "Originally published on …" for republished essays (frontmatter canonicalUrl). */
+.original {
+	margin: 0;
+}
+.original a {
+	color: var(--rose);
+	text-decoration: underline 1px var(--thread);
+	text-underline-offset: 3px;
+}
