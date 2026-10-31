@@ -81,7 +81,7 @@ Most of the Python call-site changes are import renames (`from opensearchpy impo
 That package depends on the old `elasticsearch` client, reintroducing the urllib3 cap, and hasn't shipped since [July 2022](https://pypi.org/project/django-elasticsearch-dsl-drf/), with no OpenSearch successor: [`django-opensearch-dsl`](https://github.com/codoc-health/django-opensearch-dsl) only handles indexing, and `django-anysearch-dsl-drf` never made it to PyPI.
 
 Rewriting the endpoint onto the ORM would have meant a real backfill, not a client swap, so we vendored the roughly 190 lines we actually used into a project-local module, `processor/v1/opensearch_drf.py`. If you hit the same wall: check whether a maintained package already covers your usage (indexing-only ones often skip the DRF layer), how narrow your actual usage is, and whether anything downstream depends on an exact response shape.
-#### Preserving the API contract
+### Preserving the API contract
 
 The frontend application depended on a rigid JSON response structure for pagination and ordering:
 
@@ -176,6 +176,3 @@ Finally, running `pip-audit` verified the security milestone:
 $ pip-audit
 No known vulnerabilities found
 ```
-
-## Author bio
-Serhii Soldatov is a senior full-stack engineer at Next Matter, focused on backend architecture, performance, and complex product delivery. He works at the intersection of hands-on engineering and technical leadership, owning critical integrations and mentoring other engineers.
