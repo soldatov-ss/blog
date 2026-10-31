@@ -75,6 +75,26 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 	<article class="sr-prose">
 		<slot />
 	</article>
+	<dialog class="zoom" aria-label="Full-size image"></dialog>
+	<script>
+		// Screenshots are shrunk to the 680px column; clicking one opens it full size in a native modal
+		// (Esc and focus return come free). Any click inside closes it.
+		const dialog = document.querySelector<HTMLDialogElement>('dialog.zoom')!;
+		const big = dialog.appendChild(new Image());
+		dialog.addEventListener('click', () => dialog.close());
+		for (const img of document.querySelectorAll<HTMLImageElement>('.sr-prose img')) {
+			const button = document.createElement('button');
+			button.className = 'zoom-trigger';
+			button.ariaLabel = `Enlarge image: ${img.alt}`;
+			img.replaceWith(button);
+			button.append(img);
+			button.addEventListener('click', () => {
+				big.src = img.currentSrc || img.src;
+				big.alt = img.alt;
+				dialog.showModal();
+			});
+		}
+	</script>
 
 	<footer class="article-end">
 		<Divider />
