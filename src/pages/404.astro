@@ -1,0 +1,22 @@
+---
+import { SITE_TITLE } from '../consts';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title={`Page not found · ${SITE_TITLE}`} description="This page doesn't exist.">
+	<header class="sr-article-head">
+		<h1 class="sr-display">
+			This seam came <em>loose</em>
+		</h1>
+		<p class="sr-lede">Nothing lives at this address. The page may have moved, or the link has a typo.</p>
+		<hr class="sr-seam" />
+	</header>
+	<div class="sr-article-head actions">
+		<a class="sr-btn sr-btn--primary" href="/blog/">
+			Browse the articles
+		</a>
+		<a class="sr-btn sr-btn--outline" href="/">
+			Go to the home page
+		</a>
+	</div>
+</Layout>

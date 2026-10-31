@@ -1,0 +1,34 @@
+---
+// Every page uses the Sirene design system (sirene-design-system/). Nav → slot → Footer.
+import '../../sirene-design-system/tokens.css';
+import '../../sirene-design-system/components/bundle.css';
+import '../styles/site.css';
+import BaseHead from '../components/BaseHead.astro';
+import type { ComponentProps } from 'astro/types';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+
+type Props = ComponentProps<typeof BaseHead>;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead {...Astro.props} />
+	</head>
+	<body class="sr">
+		<a class="skip-link" href="#main">
+			Skip to content
+		</a>
+		<div class="page nav-wrap">
+			<Nav />
+		</div>
+		<main class="page" id="main" tabindex="-1">
+			<slot />
+		</main>
+		<Footer />
+		<script>
+			import '../code-block/copy';
+		</script>
+	</body>
+</html>

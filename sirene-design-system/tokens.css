@@ -1,0 +1,108 @@
+/* Sirene tokens: the one place colours live. Each colour is light-dark(Silk, Coliseum night).
+   color-scheme picks the side: the OS by default, or a theme pinned with data-theme on <html>.
+   Copies that can't read CSS variables: public/favicon.svg, public/rss.xsl, BaseHead.astro theme-color. */
+:root {
+	color-scheme: light dark;
+}
+[data-theme='silk'] {
+	color-scheme: light;
+}
+[data-theme='coliseum'] {
+	color-scheme: dark;
+}
+:root {
+	--surface-canvas: light-dark(#faf4ec, #1b1117);
+	--surface-card: light-dark(#fffaf3, #251820);
+	--surface-tint: light-dark(#f3e6dc, #33212b);
+	--surface-deep: light-dark(#2a1520, #120b0f);
+	--ink: light-dark(#2c1822, #f7ece3);
+	--ink-soft: light-dark(#5a4250, #dcc7c9);
+	--ink-muted: light-dark(#745d6a, #ab949d);
+	--rose: light-dark(#a8435a, #ef94a2);
+	--on-rose: light-dark(#fffaf3, #1b1117);
+	--rose-blush: light-dark(#f3d3cf, #4a2632);
+	--coral: light-dark(#e58a73, #d97a66);
+	--gold: light-dark(#86601c, #e2bb6a);
+	--thread: light-dark(#a37632, #c99a4c);
+	--teal: light-dark(#24686a, #80c9c2);
+	--hairline: light-dark(#e8d8c6, #3d2a33);
+	--on-deep: #f7ece3;
+	--on-deep-muted: light-dark(#c7aeb6, #ab949d);
+	--focus-ring: light-dark(#a8435a, #ef94a2);
+	--shadow-patch:
+		0 1px 0 light-dark(rgba(44, 24, 34, 0.04), rgba(0, 0, 0, 0.3)),
+		0 10px 24px -14px light-dark(rgba(84, 36, 52, 0.22), rgba(0, 0, 0, 0.6));
+}
+:root {
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-12: 48px;
+	--space-16: 64px;
+	--space-24: 96px;
+	--radius-sm: 4px;
+	--radius-md: 10px;
+	--radius-lg: 18px;
+	--radius-pill: 9999px;
+	--font-display: var(--font-fraunces, 'Iowan Old Style', Georgia, serif);
+	--font-sans: var(--font-bricolage, 'Avenir Next', system-ui, sans-serif);
+	--font-mono: var(--font-jetbrains, ui-monospace, 'SF Mono', Menlo, monospace);
+}
+.display {
+	font-family: var(--font-display);
+	font-size: 64px;
+	line-height: 68px;
+	font-weight: 500;
+	letter-spacing: -0.045em;
+}
+.heading {
+	font-family: var(--font-display);
+	font-size: 36px;
+	line-height: 44px;
+	font-weight: 500;
+	letter-spacing: -0.025em;
+}
+.subheading {
+	font-family: var(--font-display);
+	font-size: 22px;
+	line-height: 30px;
+	font-weight: 500;
+	letter-spacing: -0.02em;
+}
+.lede {
+	font-family: var(--font-sans);
+	font-size: 20px;
+	line-height: 32px;
+	font-weight: 350;
+	letter-spacing: 0.01em;
+}
+.body {
+	font-family: var(--font-sans);
+	font-size: 18px;
+	line-height: 30px;
+	font-weight: 350;
+	letter-spacing: 0.012em;
+}
+.body-sm {
+	font-family: var(--font-sans);
+	font-size: 15px;
+	line-height: 24px;
+	font-weight: 400;
+	letter-spacing: 0.02em;
+}
+.caption {
+	font-family: var(--font-sans);
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 550;
+	letter-spacing: 0.08em;
+}
+.code {
+	font-family: var(--font-mono);
+	font-size: 14px;
+	line-height: 24px;
+	font-weight: 400;
+}

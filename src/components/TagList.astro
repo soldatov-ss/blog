@@ -1,0 +1,20 @@
+---
+// Sirene Tag: sirene-design-system/components/Tag
+import { tagLabel, tagUrl } from '../posts';
+
+interface Props {
+	tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<ul class="tag-list" aria-label="Tags">
+	{tags.map((tag) => (
+		<li>
+			<a class="sr-tag" href={tagUrl(tag)}>
+				{tagLabel(tag)}
+			</a>
+		</li>
+	))}
+</ul>

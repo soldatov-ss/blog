@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Sirene demo</title>
+		<link rel="stylesheet" href="tokens.css" />
+		<link rel="stylesheet" href="components/bundle.css" />
+		<style>
+			body {
+				margin: 0;
+			}
+			main {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 32px 16px;
+				display: grid;
+				gap: 64px;
+			}
+			.toggle {
+				position: fixed;
+				right: 16px;
+				bottom: 16px;
+			}
+		</style>
+	</head>
+	<body class="sr">
+		<main>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">Nav</p>
+				<nav class="sr-nav" aria-label="Main">
+					<a class="sr-nav__mark" href="#">Serhii <em>writes</em></a>
+					<div class="sr-nav__links">
+						<a href="#" aria-current="page">Essays</a><a href="#">Notes</a><a href="#">Tags</a><a href="#">About</a>
+					</div>
+					<a class="sr-btn sr-btn--primary" href="#" style="padding: 8px 18px">Subscribe</a>
+				</nav>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">ArticleHeader</p>
+				<header class="sr-article-head">
+					<span class="sr-eyebrow">Architecture · Part 2</span>
+					<h1 class="sr-display">Roles are seams, <em>not</em> walls</h1>
+					<p class="sr-lede">
+						Why every hardcoded role eventually tears, and how to cut a permission model that can be let out and taken
+						in.
+					</p>
+					<div class="sr-byline">
+						<span class="sr-meta">Serhii S.</span><span class="sr-meta">· Oct 31, 2026</span
+						><span class="sr-meta">· 14 min read</span>
+					</div>
+					<hr class="sr-seam" style="margin-top: 8px" />
+				</header>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">Button</p>
+				<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+					<a class="sr-btn sr-btn--primary" href="#"
+						>Read the essay
+						<svg viewBox="0 0 14 14" aria-hidden="true">
+							<path
+								d="M2 7h10M8 3l4 4-4 4"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.6"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/></svg
+					></a>
+					<a class="sr-btn sr-btn--outline" href="#">All posts</a>
+					<a class="sr-btn sr-btn--ghost" href="#">Subscribe via RSS</a>
+				</div>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">PostCard</p>
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px">
+					<a class="sr-card sr-stitched" href="#">
+						<span class="sr-eyebrow">Architecture</span>
+						<h3 class="sr-subheading">Decomposing hardcoded roles into <em>permissions</em></h3>
+						<p class="sr-card__excerpt">
+							Admins, editors, viewers — and the slow way every role system grows a thousand exceptions.
+						</p>
+						<div class="sr-card__foot">
+							<span class="sr-meta">Oct 18, 2026</span><span class="sr-meta">· 12 min</span>
+						</div>
+					</a>
+					<a class="sr-card sr-stitched" href="#">
+						<span class="sr-eyebrow">Notes</span>
+						<h3 class="sr-subheading">What a tailor taught me about migrations</h3>
+						<p class="sr-card__excerpt">Baste first, sew later: shipping schema changes in reversible stitches.</p>
+						<div class="sr-card__foot">
+							<span class="sr-meta">Sep 30, 2026</span><span class="sr-meta">· 6 min</span>
+						</div>
+					</a>
+				</div>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">SeamDivider</p>
+				<div style="display: grid; gap: 28px">
+					<hr class="sr-seam" />
+					<div class="sr-divider">
+						<div class="sr-seam"></div>
+						<svg viewBox="0 0 22 22" aria-hidden="true">
+							<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+								<path
+									d="M11 2c2.4 2.6 2.4 5.4 0 8-2.4-2.6-2.4-5.4 0-8zM11 20c-2.4-2.6-2.4-5.4 0-8 2.4 2.6 2.4 5.4 0 8zM2 11c2.6-2.4 5.4-2.4 8 0-2.6 2.4-5.4 2.4-8 0zM20 11c-2.6 2.4-5.4 2.4-8 0 2.6-2.4 5.4-2.4 8 0z"
+								/>
+							</g>
+							<circle cx="11" cy="11" r="1.6" fill="var(--coral)" />
+						</svg>
+						<div class="sr-seam"></div>
+					</div>
+					<div class="sr-embroidery"></div>
+				</div>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">Tag</p>
+				<div style="display: flex; gap: 10px; flex-wrap: wrap">
+					<a class="sr-tag" href="#" aria-current="page">Architecture</a>
+					<a class="sr-tag" href="#">TypeScript</a>
+					<a class="sr-tag" href="#">Permissions</a>
+					<a class="sr-tag" href="#">Notes</a>
+				</div>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">CodeBlock</p>
+				<figure class="sr-code" style="margin: 0">
+					<div class="sr-code__bar">
+						<span class="sr-meta">permissions.ts</span><span class="sr-meta">TypeScript</span>
+					</div>
+					<pre><span class="c">// a role is just a named bundle of permissions</span>
+<span class="k">const</span> editor = <span class="f">role</span>(<span class="s">"editor"</span>, [
+  <span class="s">"post:read"</span>, <span class="s">"post:edit"</span>, <span class="s">"comment:moderate"</span>,
+]);
+<span class="k">if</span> (<span class="f">can</span>(user, <span class="s">"post:edit"</span>)) <span class="f">save</span>(draft);</pre>
+				</figure>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">Callout</p>
+				<aside class="sr-callout">
+					<span class="sr-callout__mark"
+						><svg viewBox="0 0 22 22" aria-hidden="true">
+							<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+								<path
+									d="M11 2c2.4 2.6 2.4 5.4 0 8-2.4-2.6-2.4-5.4 0-8zM11 20c-2.4-2.6-2.4-5.4 0-8 2.4 2.6 2.4 5.4 0 8zM2 11c2.6-2.4 5.4-2.4 8 0-2.6 2.4-5.4 2.4-8 0zM20 11c-2.6 2.4-5.4 2.4-8 0 2.6-2.4 5.4-2.4 8 0z"
+								/>
+							</g>
+							<circle cx="11" cy="11" r="1.6" fill="currentColor" /></svg
+					></span>
+					<p>
+						<strong>Note.</strong> A permission check belongs at the boundary where data leaves your service — not
+						sprinkled through the UI.
+					</p>
+				</aside>
+			</section>
+			<section>
+				<p class="sr-meta" style="margin: 0 0 16px">Footer</p>
+				<footer class="sr-footer">
+					<div class="sr-kilim" aria-hidden="true"></div>
+					<div class="sr-footer__inner">
+						<div>
+							<div class="sr-footer__mark">Serhii <em>writes</em></div>
+							<p style="margin: 10px 0 0; font-size: 14px">Essays on software, woven slowly.</p>
+						</div>
+						<div style="display: flex; gap: 24px; font-size: 15px; align-items: start">
+							<a href="#">RSS</a><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Colophon</a>
+						</div>
+					</div>
+					<div class="sr-fringe" aria-hidden="true"></div>
+				</footer>
+			</section>
+		</main>
+		<button
+			class="sr-btn sr-btn--outline toggle"
+			onclick="
+				const r = document.documentElement;
+				r.dataset.theme = r.dataset.theme === 'coliseum' ? 'silk' : 'coliseum';
+			"
+		>
+			Toggle theme
+		</button>
+	</body>
+</html>

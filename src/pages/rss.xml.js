@@ -1,16 +1,23 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getPosts, postUrl } from '../posts';
 
 export async function GET(context) {
-	const posts = await getCollection('blog');
+	const posts = await getPosts();
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
+		// Browsers render the feed through this stylesheet instead of showing raw XML.
+		stylesheet: '/rss.xsl',
 		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
+			title: post.data.title,
+			description: post.data.description,
+			pubDate: post.data.pubDate,
+			categories: post.data.tags,
+			// Full text, so feed readers and agents get the essay, not just the summary.
+			content: post.rendered?.html,
+			link: postUrl(post),
 		})),
 	});
 }

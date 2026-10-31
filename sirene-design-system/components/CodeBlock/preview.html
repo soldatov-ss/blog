@@ -1,0 +1,32 @@
+<!-- @dsCard group="Content" height=230 subtitle="filename bar · stitched seam" -->
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			body {
+				margin: 0;
+			}
+			.pad {
+				padding: 28px 32px;
+			}
+		</style>
+	</head>
+	<body class="sr">
+		<div class="pad">
+			<figure class="sr-code" style="margin: 0">
+				<div class="sr-code__bar">
+					<span class="sr-meta">permissions.ts</span><span class="sr-meta">TypeScript</span>
+				</div>
+				<pre><span class="c">// a role is just a named bundle of permissions</span>
+<span class="k">const</span> editor = <span class="f">role</span>(<span class="s">"editor"</span>, [
+  <span class="s">"post:read"</span>, <span class="s">"post:edit"</span>, <span class="s">"comment:moderate"</span>,
+]);
+<span class="k">if</span> (<span class="f">can</span>(user, <span class="s">"post:edit"</span>)) <span class="f">save</span>(draft);</pre>
+			</figure>
+		</div>
+		<script>
+			/* static preview */
+		</script>
+	</body>
+</html>

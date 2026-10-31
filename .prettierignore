@@ -1,0 +1,5 @@
+dist
+.astro
+.impeccable
+package-lock.json
+src/content

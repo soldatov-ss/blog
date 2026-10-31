@@ -1,0 +1,40 @@
+---
+import PostCard from '../../components/PostCard.astro';
+import { SITE_TITLE } from '../../consts';
+import Layout from '../../layouts/Layout.astro';
+import { essayCount, getPosts, type Post, postsTagged, tagLabel, tagsOf } from '../../posts';
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	return tagsOf(posts).map((tag) => ({
+		params: { tag },
+		props: { posts: postsTagged(posts, tag) },
+	}));
+}
+
+interface Props {
+	posts: Post[];
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+const label = tagLabel(tag);
+---
+
+<Layout title={`${label} · ${SITE_TITLE}`} description={`Articles tagged ${label}.`}>
+	<header class="page-head">
+		<h1 class="sr-display">{label}</h1>
+		<p class="sr-meta">
+			{essayCount(posts.length)} tagged {label} ·
+			<a class="sr-link" href="/blog/">
+				All articles
+			</a>
+		</p>
+		<hr class="sr-seam" />
+	</header>
+	<div class="post-grid">
+		{posts.map((post) => (
+			<PostCard post={post} />
+		))}
+	</div>
+</Layout>
