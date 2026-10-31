@@ -6,7 +6,7 @@ import Divider from '../components/Divider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TagList from '../components/TagList.astro';
 import { SITE_TITLE } from '../consts';
-import { type Post, postUrl, readingMinutes } from '../posts';
+import { markdownUrl, type Post, postUrl, readingMinutes } from '../posts';
 import Layout from './Layout.astro';
 
 interface Props {
@@ -21,7 +21,14 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = post.data;
 const sections = headings.filter((heading) => heading.depth === 2);
 ---
 
-<Layout title={title} description={description} image={heroImage} published={pubDate} modified={updatedDate}>
+<Layout
+	title={title}
+	description={description}
+	image={heroImage}
+	published={pubDate}
+	modified={updatedDate}
+	markdown={markdownUrl(post)}
+>
 	<header class="sr-article-head">
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>

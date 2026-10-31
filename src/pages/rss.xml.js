@@ -15,6 +15,8 @@ export async function GET(context) {
 			description: post.data.description,
 			pubDate: post.data.pubDate,
 			categories: post.data.tags,
+			// Full text, so feed readers and agents get the essay, not just the summary.
+			content: post.rendered?.html,
 			link: postUrl(post),
 		})),
 	});

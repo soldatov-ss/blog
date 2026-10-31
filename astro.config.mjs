@@ -1,9 +1,11 @@
 // @ts-check
 
 import mdx from '@astrojs/mdx';
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 import { codeFrame } from './src/code-block/transformer.mjs';
+import { headingAnchors } from './src/heading-anchors.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +15,7 @@ export default defineConfig({
 	markdown: {
 		// Colors come from --astro-code-* tokens mapped to Sirene's code colours in src/styles/site.css.
 		shikiConfig: { theme: 'css-variables', transformers: [codeFrame] },
+		processor: satteri({ hastPlugins: [headingAnchors] }),
 	},
 	// Self-hosted at build, mapped onto Sirene's --font-* tokens in src/styles/site.css.
 	// Only what the CSS uses: Fraunces is always set with SOFT 100, sans weights 350-600.

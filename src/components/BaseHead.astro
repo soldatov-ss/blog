@@ -10,11 +10,26 @@ interface Props {
 	/** Set on article pages: emits og:type=article and its dates. */
 	published?: Date;
 	modified?: Date;
+	/** Raw Markdown copy of this page, advertised to agents via rel=alternate. */
+	markdown?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image, published, modified } = Astro.props;
+const { title, description, image, published, modified, markdown } = Astro.props;
+
+// schema.org Article: how search engines and AI answer engines attribute and cite a post.
+const articleLd = published && {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description,
+	url: canonicalURL,
+	datePublished: published.toISOString(),
+	dateModified: (modified ?? published).toISOString(),
+	author: { '@type': 'Person', name: SITE_TITLE, url: new URL('/about/', Astro.site) },
+	...(image && { image: new URL(image.src, Astro.url) }),
+};
 ---
 
 <!-- Global Metadata -->
@@ -43,6 +58,8 @@ const { title, description, image, published, modified } = Astro.props;
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+{markdown && <link rel="alternate" type="text/markdown" href={markdown} />}
+{articleLd && <script type="application/ld+json" set:html={JSON.stringify(articleLd).replaceAll('<', '\\u003c')} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>

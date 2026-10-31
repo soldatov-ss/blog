@@ -336,6 +336,27 @@ main.page {
 	color: var(--gold);
 	font-weight: 400;
 }
+/* Shareable section links (src/heading-anchors.mjs): a quiet "#" after the heading, shown on hover or focus. */
+.sr-prose .heading-anchor {
+	padding: 0 6px;
+	margin-left: 2px;
+	color: var(--thread);
+	text-decoration: none;
+	opacity: 0;
+	transition: opacity 150ms;
+}
+.sr-prose .heading-anchor::after {
+	content: '#' / '';
+}
+.sr-prose :is(h2, h3):hover .heading-anchor,
+.sr-prose .heading-anchor:focus-visible {
+	opacity: 1;
+}
+@media (hover: none) {
+	.sr-prose .heading-anchor {
+		opacity: 0.6;
+	}
+}
 .sr-prose a {
 	color: var(--rose);
 	text-decoration: underline 1.5px var(--thread);

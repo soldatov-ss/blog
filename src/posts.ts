@@ -24,3 +24,5 @@ export const readingMinutes = (post: Post) => Math.max(1, Math.round((post.body 
 
 export const postsTagged = (posts: Post[], tag: string) => posts.filter((post) => post.data.tags.includes(tag));
 export const essayCount = (n: number) => `${n} ${n === 1 ? 'essay' : 'essays'}`;
+/** Raw Markdown copy of a post, for agents and LLMs (src/pages/blog/[slug].md.ts). */
+export const markdownUrl = (post: Post) => `/blog/${post.id}.md`;
