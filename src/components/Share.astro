@@ -27,6 +27,7 @@ const targets = [
 	<span class="share__networks">
 		{targets.map(({ label, href }) => (
 			<a href={href} target="_blank" rel="noopener">
+				<span class="sr-only">Share on </span>
 				{label}
 			</a>
 		))}

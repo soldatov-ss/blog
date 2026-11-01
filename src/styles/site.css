@@ -1,6 +1,11 @@
 /* Page layout and article prose on top of Sirene (sirene-design-system/). Tokens only, no new colours. */
 :root {
 	scrollbar-color: var(--thread) transparent;
+	caret-color: var(--rose);
+}
+::selection {
+	background: var(--rose-blush);
+	color: var(--ink);
 }
 html {
 	scroll-padding-top: var(--space-6);
@@ -594,7 +599,9 @@ main.page {
 	color: var(--ink-soft);
 	text-decoration: underline 1px var(--thread);
 	text-underline-offset: 4px;
-	padding-block: 4px;
+	/* Padding widens each target ("X" alone is 9px); the negative margin keeps the visible gaps even. */
+	padding: 4px 8px;
+	margin-inline: -8px;
 }
 .share__networks a:hover {
 	color: var(--rose);
