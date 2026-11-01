@@ -1,6 +1,5 @@
 ---
-// Sirene article: cover → ArticleHeader → series → contents → prose (CodeBlock) → tags → share → more essays → RSS.
-import { getImage, Image } from 'astro:assets';
+// Sirene article: ArticleHeader → series → contents → prose (CodeBlock) → tags → share → more essays → RSS.
 import type { MarkdownHeading } from 'astro';
 import Divider from '../components/Divider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -21,12 +20,11 @@ interface Props {
 const { post, headings, newer, older, series = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
 const sections = headings.filter((heading) => heading.depth === 2);
-// An animated cover holds still (its heroStill frame) for readers who ask for reduced motion.
+// Covers aren't shown on the page (they're dark title cards that repeat the headline); they're only the link preview.
 // Inside a series, the end-of-article links walk the series instead of the archive.
 const part = series.findIndex((p) => p.id === post.id);
 const prev = series.length ? series[part - 1] : older;
 const next = series.length ? series[part + 1] : newer;
-const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, format: 'webp' }));
 ---
 
 <Layout
@@ -38,15 +36,6 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 	markdown={markdownUrl(post)}
 	canonical={canonicalUrl}
 >
-	{heroImage && (
-		<figure class="hero-image sr-stitched">
-			<picture>
-				{stillCover && <source srcset={stillCover.src} media="(prefers-reduced-motion: reduce)" />}
-				<Image src={heroImage} width={1080} alt="" loading="eager" />
-			</picture>
-		</figure>
-	)}
-
 	<header class="sr-article-head">
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>

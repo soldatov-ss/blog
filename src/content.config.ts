@@ -13,8 +13,9 @@ const blog = defineCollection({
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
+			// Link-preview image only: articles don't render it.
 			heroImage: z.optional(image()),
-			// First frame of an animated heroImage: link previews and reduced motion use it.
+			// First frame of an animated heroImage: link previews use it (animated GIFs are too large for social cards).
 			heroStill: z.optional(image()),
 			// Where the essay first appeared, if elsewhere: becomes rel=canonical so search engines credit the original.
 			canonicalUrl: z.url().optional(),

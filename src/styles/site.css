@@ -165,21 +165,6 @@ main.page {
 	max-width: 60ch;
 }
 
-.hero-image {
-	max-width: 1080px;
-	margin: 0 auto;
-	border-radius: var(--radius-lg);
-	overflow: hidden;
-}
-.hero-image + .sr-article-head {
-	margin-top: var(--space-12);
-}
-.hero-image img {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-
 .article-end {
 	max-width: 680px;
 	margin: var(--space-24) auto 0;
