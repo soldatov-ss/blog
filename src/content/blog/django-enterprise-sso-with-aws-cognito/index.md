@@ -5,6 +5,7 @@ pubDate: '2026-04-12'
 canonicalUrl: 'https://dev.to/soldatov-ss/from-django-library-to-aws-cognito-my-journey-building-enterprise-sso-30be'
 heroImage: './cover.webp'
 tags: ['django', 'aws', 'cognito', 'sso']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 6 }
 ---
 
 ## The client call that started everything

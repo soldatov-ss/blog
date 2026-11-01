@@ -19,6 +19,8 @@ const blog = defineCollection({
 			// Where the essay first appeared, if elsewhere: becomes rel=canonical so search engines credit the original.
 			canonicalUrl: z.url().optional(),
 			tags: z.array(z.string()).default([]),
+			// Posts sharing a series name are read in `part` order (src/posts.ts seriesOf).
+			series: z.object({ name: z.string(), part: z.number().int().positive() }).optional(),
 		}),
 });
 

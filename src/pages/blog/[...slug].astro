@@ -1,14 +1,14 @@
 ---
 import { render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
-import { getPosts, type Post } from '../../posts';
+import { getPosts, type Post, seriesOf } from '../../posts';
 
 export async function getStaticPaths() {
 	const posts = await getPosts();
 	// Newest first, so the newer essay is the one before this one in the list.
 	return posts.map((post, i) => ({
 		params: { slug: post.id },
-		props: { post, newer: posts[i - 1], older: posts[i + 1] },
+		props: { post, newer: posts[i - 1], older: posts[i + 1], series: seriesOf(posts, post) },
 	}));
 }
 
@@ -16,12 +16,13 @@ interface Props {
 	post: Post;
 	newer?: Post;
 	older?: Post;
+	series: Post[];
 }
 
-const { post, newer, older } = Astro.props;
+const { post, newer, older, series } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<BlogPost post={post} headings={headings} newer={newer} older={older}>
+<BlogPost post={post} headings={headings} newer={newer} older={older} series={series}>
 	<Content />
 </BlogPost>

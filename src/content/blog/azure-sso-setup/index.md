@@ -4,6 +4,7 @@ description: 'How to register an app in Azure (Microsoft Entra ID) for OIDC SSO:
 pubDate: '2026-04-11'
 canonicalUrl: 'https://dev.to/soldatov-ss/azure-single-sign-on-sso-setup-a-step-by-step-guide-2fjd'
 tags: ['azure', 'sso', 'authentication', 'oidc']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 1 }
 ---
 
 To enable Single Sign-On (SSO) for your application, we first need to register it in **Azure Active**  

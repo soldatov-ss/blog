@@ -1,7 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import { Font, getImage } from 'astro:assets';
-import { DAY_THEME, NIGHT_THEME, SITE_TITLE, THEME_KEY } from '../consts';
+import { DAY_THEME, NIGHT_THEME, SITE_TITLE, SOCIAL_LINKS, THEME_KEY } from '../consts';
 
 interface Props {
 	title: string;
@@ -32,7 +32,12 @@ const articleLd = published && {
 	url: canonicalURL,
 	datePublished: published.toISOString(),
 	dateModified: (modified ?? published).toISOString(),
-	author: { '@type': 'Person', name: SITE_TITLE, url: new URL('/about/', Astro.site) },
+	author: {
+		'@type': 'Person',
+		name: SITE_TITLE,
+		url: new URL('/about/', Astro.site),
+		sameAs: SOCIAL_LINKS.map((link) => link.href),
+	},
 	...(shareImage && { image: shareImage }),
 };
 ---

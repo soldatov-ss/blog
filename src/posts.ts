@@ -22,6 +22,13 @@ export const tagLabel = (tag: string) => tag.replaceAll('-', ' ');
 /** At 220 words a minute, never less than 1. */
 export const readingMinutes = (post: Post) => Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));
 
+/** Every part of `post`'s series in reading order, or [] when it isn't in one. */
+export const seriesOf = (posts: Post[], post: Post) => {
+	const name = post.data.series?.name;
+	if (!name) return [];
+	return posts.filter((p) => p.data.series?.name === name).sort((a, b) => a.data.series!.part - b.data.series!.part);
+};
+
 export const postsTagged = (posts: Post[], tag: string) => posts.filter((post) => post.data.tags.includes(tag));
 export const essayCount = (n: number) => `${n} ${n === 1 ? 'essay' : 'essays'}`;
 /** Raw Markdown copy of a post, for agents and LLMs (src/pages/blog/[slug].md.ts). */

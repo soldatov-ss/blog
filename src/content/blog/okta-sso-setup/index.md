@@ -4,6 +4,7 @@ description: 'How to set up an Okta OIDC application for SSO: groups, role attri
 pubDate: '2026-04-11'
 canonicalUrl: 'https://dev.to/soldatov-ss/okta-single-sign-on-sso-setup-a-step-by-step-guide-3o4l'
 tags: ['okta', 'sso', 'authentication', 'security']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 2 }
 ---
 
 ## Configuring SSO authentication in Okta

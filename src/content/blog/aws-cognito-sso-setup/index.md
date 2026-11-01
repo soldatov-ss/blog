@@ -4,6 +4,7 @@ description: 'How to set up AWS Cognito for multi-tenant SSO: an app client per 
 pubDate: '2026-04-12'
 canonicalUrl: 'https://dev.to/soldatov-ss/how-to-configure-aws-cognito-for-sso-a-step-by-step-guide-3j44'
 tags: ['aws', 'cognito', 'sso', 'oidc']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 3 }
 ---
 
 ## Creating app client for each customer

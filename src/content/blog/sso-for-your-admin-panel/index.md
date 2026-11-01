@@ -4,6 +4,7 @@ description: 'How to configure SSO account and notification settings in a Django
 pubDate: '2026-04-12'
 canonicalUrl: 'https://dev.to/soldatov-ss/how-to-set-up-sso-authentication-in-your-apps-admin-panel-36k3'
 tags: ['sso', 'authentication', 'django', 'cognito']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 5 }
 ---
 
 ## Prerequisites for all OIDC providers

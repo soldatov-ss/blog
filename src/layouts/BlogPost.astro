@@ -1,9 +1,10 @@
 ---
-// Sirene article: cover → ArticleHeader → contents → prose (CodeBlock) → tags → more essays → RSS.
+// Sirene article: cover → ArticleHeader → series → contents → prose (CodeBlock) → tags → share → more essays → RSS.
 import { getImage, Image } from 'astro:assets';
 import type { MarkdownHeading } from 'astro';
 import Divider from '../components/Divider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import Share from '../components/Share.astro';
 import TagList from '../components/TagList.astro';
 import { markdownUrl, type Post, postUrl, readingMinutes } from '../posts';
 import Layout from './Layout.astro';
@@ -13,12 +14,18 @@ interface Props {
 	headings: MarkdownHeading[];
 	newer?: Post;
 	older?: Post;
+	/** Every part of this post's series in order, or []. */
+	series?: Post[];
 }
 
-const { post, headings, newer, older } = Astro.props;
+const { post, headings, newer, older, series = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
 const sections = headings.filter((heading) => heading.depth === 2);
 // An animated cover holds still (its heroStill frame) for readers who ask for reduced motion.
+// Inside a series, the end-of-article links walk the series instead of the archive.
+const part = series.findIndex((p) => p.id === post.id);
+const prev = series.length ? series[part - 1] : older;
+const next = series.length ? series[part + 1] : newer;
 const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, format: 'webp' }));
 ---
 
@@ -56,6 +63,28 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 		</div>
 		<hr class="sr-seam" />
 	</header>
+
+	{series.length > 0 && (
+		<details class="toc series">
+			<summary>
+				{post.data.series!.name}{' '}
+				<span class="toc__count">
+					Part {part + 1} of {series.length}
+				</span>
+			</summary>
+			<ol>
+				{series.map((p) => (
+					<li>
+						{p.id === post.id ? (
+							<span aria-current="page">{p.data.title}</span>
+						) : (
+							<a href={postUrl(p)}>{p.data.title}</a>
+						)}
+					</li>
+				))}
+			</ol>
+		</details>
+	)}
 
 	{sections.length > 2 && (
 		<details class="toc">
@@ -104,18 +133,19 @@ const stillCover = heroStill && (await getImage({ src: heroStill, width: 1080, f
 			</p>
 		)}
 		{tags.length > 0 && <TagList tags={tags} />}
-		{(newer || older) && (
-			<nav class="more" aria-label="More essays">
-				{older && (
-					<a class="more__link" href={postUrl(older)}>
-						<span class="sr-meta">Older</span>
-						<span class="sr-subheading">{older.data.title}</span>
+		<Share title={title} />
+		{(prev || next) && (
+			<nav class="more" aria-label={series.length ? 'More in this series' : 'More essays'}>
+				{prev && (
+					<a class="more__link" href={postUrl(prev)}>
+						<span class="sr-meta">{series.length ? `Previous: part ${part}` : 'Older'}</span>
+						<span class="sr-subheading">{prev.data.title}</span>
 					</a>
 				)}
-				{newer && (
-					<a class="more__link more__link--newer" href={postUrl(newer)}>
-						<span class="sr-meta">Newer</span>
-						<span class="sr-subheading">{newer.data.title}</span>
+				{next && (
+					<a class="more__link more__link--newer" href={postUrl(next)}>
+						<span class="sr-meta">{series.length ? `Next: part ${part + 2}` : 'Newer'}</span>
+						<span class="sr-subheading">{next.data.title}</span>
 					</a>
 				)}
 			</nav>

@@ -1,0 +1,57 @@
+---
+// Share row at the end of an article: plain links to each network's own share page, so no third-party
+// scripts or trackers load. "Share…" (the device share sheet) only appears where the browser supports it.
+interface Props {
+	title: string;
+}
+
+const url = Astro.url.href;
+const u = encodeURIComponent(url);
+const t = encodeURIComponent(Astro.props.title);
+const targets = [
+	{ label: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` },
+	{ label: 'X', href: `https://x.com/intent/post?url=${u}&text=${t}` },
+	{ label: 'Reddit', href: `https://www.reddit.com/submit?url=${u}&title=${t}` },
+	{ label: 'Hacker News', href: `https://news.ycombinator.com/submitlink?u=${u}&t=${t}` },
+];
+---
+
+<section class="share" aria-labelledby="share-title" data-url={url} data-title={Astro.props.title}>
+	<p class="sr-meta" id="share-title">
+		Share this essay
+	</p>
+	<div class="share__row">
+		<button class="sr-btn sr-btn--outline share__native" type="button" hidden>
+			Share…
+		</button>
+		{targets.map(({ label, href }) => (
+			<a class="sr-btn sr-btn--outline" href={href} target="_blank" rel="noopener">
+				{label}
+			</a>
+		))}
+		<button class="sr-btn sr-btn--outline share__copy" type="button">
+			Copy link
+		</button>
+		<span class="sr-meta share__status" role="status"></span>
+	</div>
+</section>
+
+<script>
+	for (const box of document.querySelectorAll<HTMLElement>('.share')) {
+		const { url = location.href, title = document.title } = box.dataset;
+		const status = box.querySelector('.share__status')!;
+		const native = box.querySelector<HTMLButtonElement>('.share__native')!;
+		if (navigator.share) {
+			native.hidden = false;
+			native.addEventListener('click', () => navigator.share({ url, title }).catch(() => {}));
+		}
+		box.querySelector('.share__copy')!.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(url);
+				status.textContent = 'Link copied';
+			} catch {
+				status.textContent = url;
+			}
+		});
+	}
+</script>

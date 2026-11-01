@@ -5,6 +5,7 @@ pubDate: '2025-08-10'
 canonicalUrl: 'https://dev.to/soldatov-ss/part-1-django-rest-framework-when-and-when-not-to-override-serializers-and-viewsets-11a7'
 heroImage: './cover.webp'
 tags: ['django', 'drf', 'architecture', 'clean-code']
+series: { name: 'Django REST Framework overrides', part: 1 }
 ---
 
 ## DRF, part 1: serializer overrides

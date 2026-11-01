@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -19,6 +19,17 @@ import Layout from '../layouts/Layout.astro';
 		<p>
 			New essays show up on the <a href="/blog/">articles page</a>, and you can follow along with the{' '}
 			<a href="/rss.xml">RSS feed</a>.
+		</p>
+		<p>
+			Elsewhere:{' '}
+			{SOCIAL_LINKS.map(({ label, href }, i) => (
+				<>
+					{i > 0 && ' · '}
+					<a href={href} rel="me">
+						{label}
+					</a>
+				</>
+			))}
 		</p>
 	</div>
 </Layout>

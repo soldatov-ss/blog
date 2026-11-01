@@ -191,6 +191,13 @@ main.page {
 .sr-article-head + .toc {
 	margin-top: var(--space-4);
 }
+.series + .toc {
+	margin-top: var(--space-2);
+}
+.series [aria-current] {
+	color: var(--ink);
+	font-weight: 500;
+}
 .toc + .sr-prose {
 	margin-top: var(--space-8);
 }
@@ -250,6 +257,23 @@ main.page {
 .more__link:hover .sr-subheading {
 	color: var(--rose);
 }
+.share {
+	display: grid;
+	gap: var(--space-3);
+}
+.share p {
+	margin: 0;
+}
+.share__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-2);
+}
+.share .sr-btn {
+	padding: 6px 16px;
+	font-size: 14px;
+}
 .subscribe {
 	display: grid;
 	gap: var(--space-4);
@@ -276,6 +300,20 @@ main.page {
 	gap: var(--space-6);
 	font-size: 15px;
 	align-items: start;
+}
+.footer-social {
+	display: flex;
+	gap: var(--space-2);
+}
+.sr-footer .footer-social .sr-icon-btn {
+	padding: 0;
+	color: var(--on-deep);
+	border-color: color-mix(in srgb, var(--on-deep) 30%, transparent);
+}
+.sr-footer .footer-social .sr-icon-btn:hover {
+	color: var(--thread);
+	border-color: var(--thread);
+	text-decoration: none;
 }
 .footer-copy {
 	flex-basis: 100%;

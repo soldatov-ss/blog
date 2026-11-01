@@ -4,6 +4,7 @@ description: 'How to test SSO login and logout through AWS Cognito with an exter
 pubDate: '2026-04-12'
 canonicalUrl: 'https://dev.to/soldatov-ss/how-to-test-sso-authentication-with-cognito-and-oidc-providers-894'
 tags: ['sso', 'testing', 'cognito', 'oidc']
+series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 4 }
 ---
 
 ## Prerequisites for all OIDC providers
