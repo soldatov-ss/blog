@@ -1,6 +1,7 @@
 ---
-// Share row at the end of an article: plain links to each network's own share page, so no third-party
-// scripts or trackers load. "Share…" (the device share sheet) only appears where the browser supports it.
+// Share line at the end of an article: Copy link, plus the device share sheet where the browser has one.
+// Without a share sheet (most desktop browsers) it falls back to plain links to each network's share page,
+// so no third-party scripts or trackers load either way.
 interface Props {
 	title: string;
 }
@@ -16,33 +17,31 @@ const targets = [
 ];
 ---
 
-<section class="share" aria-labelledby="share-title" data-url={url} data-title={Astro.props.title}>
-	<p class="sr-meta" id="share-title">
-		Share this essay
-	</p>
-	<div class="share__row">
-		<button class="sr-btn sr-btn--outline share__native" type="button" hidden>
-			Share…
-		</button>
+<section class="share" aria-label="Share this essay" data-url={url} data-title={Astro.props.title}>
+	<button class="sr-btn sr-btn--outline share__copy" type="button">
+		Copy link
+	</button>
+	<button class="sr-btn sr-btn--outline share__native" type="button" hidden>
+		Share…
+	</button>
+	<span class="share__networks">
 		{targets.map(({ label, href }) => (
-			<a class="sr-btn sr-btn--outline" href={href} target="_blank" rel="noopener">
+			<a href={href} target="_blank" rel="noopener">
 				{label}
 			</a>
 		))}
-		<button class="sr-btn sr-btn--outline share__copy" type="button">
-			Copy link
-		</button>
-		<span class="sr-meta share__status" role="status"></span>
-	</div>
+	</span>
+	<span class="sr-meta share__status" role="status"></span>
 </section>
 
 <script>
 	for (const box of document.querySelectorAll<HTMLElement>('.share')) {
 		const { url = location.href, title = document.title } = box.dataset;
 		const status = box.querySelector('.share__status')!;
-		const native = box.querySelector<HTMLButtonElement>('.share__native')!;
 		if (navigator.share) {
+			const native = box.querySelector<HTMLButtonElement>('.share__native')!;
 			native.hidden = false;
+			box.querySelector<HTMLElement>('.share__networks')!.hidden = true;
 			native.addEventListener('click', () => navigator.share({ url, title }).catch(() => {}));
 		}
 		box.querySelector('.share__copy')!.addEventListener('click', async () => {

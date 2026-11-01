@@ -1,0 +1,53 @@
+---
+// Archive index: essays grouped by year, a stitched seam after each year, one dense entry per essay.
+// Used by /blog/ and the tag pages. Cards stay for the home page's featured essay and Projects.
+import { getPosts, type Post, postUrl, readingMinutes, seriesOf } from '../posts';
+
+interface Props {
+	posts: Post[];
+}
+
+const { posts } = Astro.props;
+const all = await getPosts();
+const years = Map.groupBy(posts, (post) => post.data.pubDate.getUTCFullYear());
+const day = (date: Date) => date.toLocaleDateString('en-us', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+<div class="archive">
+	{[...years].map(([year, entries]) => (
+		<section class="archive__year" aria-labelledby={`y${year}`}>
+			<h2 class="archive__label" id={`y${year}`}>
+				{year}
+			</h2>
+			<ol class="archive__list">
+				{entries.map((post) => {
+					const series = post.data.series;
+					return (
+						<li class="archive__item">
+							<time class="sr-meta archive__date" datetime={post.data.pubDate.toISOString()}>
+								{day(post.data.pubDate)}
+							</time>
+							<div class="archive__body">
+								<h3 class="sr-subheading">
+									<a href={postUrl(post)}>{post.data.title}</a>
+								</h3>
+								<p class="archive__excerpt">{post.data.description}</p>
+								<p class="archive__meta">
+									{readingMinutes(post)} min read
+									{series && (
+										<>
+											{' · '}
+											<span class="archive__series">
+												{series.name}, part {series.part} of {seriesOf(all, post).length}
+											</span>
+										</>
+									)}
+								</p>
+							</div>
+						</li>
+					);
+				})}
+			</ol>
+		</section>
+	))}
+</div>

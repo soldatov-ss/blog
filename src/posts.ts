@@ -4,10 +4,13 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 
 export type Post = CollectionEntry<'blog'>;
 
-/** All posts, newest first. */
+/** All posts, newest first. Same-day series parts keep their order: the later part counts as newer. */
 export async function getPosts(): Promise<Post[]> {
 	return (await getCollection('blog')).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || a.id.localeCompare(b.id),
+		(a, b) =>
+			b.data.pubDate.valueOf() - a.data.pubDate.valueOf() ||
+			(b.data.series?.part ?? 0) - (a.data.series?.part ?? 0) ||
+			a.id.localeCompare(b.id),
 	);
 }
 
@@ -16,8 +19,16 @@ export const tagsOf = (posts: Post[]) => [...new Set(posts.flatMap((post) => pos
 
 export const postUrl = (post: Post) => `/blog/${post.id}/`;
 export const tagUrl = (tag: string) => `/tags/${tag}/`;
-/** Tags are slugs (`access-control`); this is how a reader sees them. */
-export const tagLabel = (tag: string) => tag.replaceAll('-', ' ');
+// Acronyms and names a plain capitalisation would get wrong.
+const TAG_LABELS: Record<string, string> = {
+	aws: 'AWS',
+	drf: 'DRF',
+	'e2e-testing': 'E2E testing',
+	oidc: 'OIDC',
+	sso: 'SSO',
+};
+/** Tags are slugs (`access-control`); this is how a reader sees them (`Access control`). */
+export const tagLabel = (tag: string) => TAG_LABELS[tag] ?? tag[0].toUpperCase() + tag.slice(1).replaceAll('-', ' ');
 
 /** At 220 words a minute, never less than 1. */
 export const readingMinutes = (post: Post) => Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));

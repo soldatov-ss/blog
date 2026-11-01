@@ -1,4 +1,5 @@
 ---
+import Divider from '../components/Divider.astro';
 import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Layout from '../layouts/Layout.astro';
@@ -15,10 +16,13 @@ const more = rest.slice(0, 4);
 			Changing software that people <em>already</em> rely on
 		</h1>
 		<p class="sr-lede">
-			I'm a software engineer. I write long-form notes on architecture, access control and refactoring live systems:
-			what we changed, and how we proved nothing broke.
+			I'm Serhii Soldatov, a software engineer. I write long-form notes on architecture, access control and refactoring
+			live systems: what we changed, and how we proved nothing broke.
 		</p>
 	</section>
+	<div class="hero-foot">
+		<Divider />
+	</div>
 
 	{latest && (
 		<section class="section" aria-label="Latest essay">

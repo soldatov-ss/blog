@@ -6,6 +6,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Share from '../components/Share.astro';
 import TagList from '../components/TagList.astro';
 import { markdownUrl, type Post, postUrl, readingMinutes } from '../posts';
+import { SITE_TITLE } from '../consts';
 import Layout from './Layout.astro';
 
 interface Props {
@@ -19,7 +20,9 @@ interface Props {
 
 const { post, headings, newer, older, series = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
-const sections = headings.filter((heading) => heading.depth === 2);
+// Contents lists the h2 sections; posts structured in h3s (fewer than three h2s) list those instead.
+const h2s = headings.filter((heading) => heading.depth === 2);
+const sections = h2s.length > 2 ? h2s : headings.filter((heading) => heading.depth === 3);
 // Covers aren't shown on the page (they're dark title cards that repeat the headline); they're only the link preview.
 // Inside a series, the end-of-article links walk the series instead of the archive.
 const part = series.findIndex((p) => p.id === post.id);
@@ -40,8 +43,11 @@ const next = series.length ? series[part + 1] : newer;
 		<h1 class="sr-display">{title}</h1>
 		<p class="sr-lede">{description}</p>
 		<div class="sr-byline">
+			<a class="byline-author" href="/about/" rel="author">
+				{SITE_TITLE}
+			</a>
 			<span class="sr-meta">
-				<FormattedDate date={pubDate} />
+				· <FormattedDate date={pubDate} />
 			</span>
 			<span class="sr-meta">· {readingMinutes(post)} min read</span>
 			{updatedDate && (
@@ -50,49 +56,128 @@ const next = series.length ? series[part + 1] : newer;
 				</span>
 			)}
 		</div>
+		{canonicalUrl && (
+			<p class="original">
+				Originally published on <a href={canonicalUrl}>{new URL(canonicalUrl).hostname.replace(/^www\./, '')}</a>
+			</p>
+		)}
 		<hr class="sr-seam" />
 	</header>
 
 	{series.length > 0 && (
-		<details class="toc series">
-			<summary>
-				{post.data.series!.name}{' '}
-				<span class="toc__count">
+		<nav class="series" aria-labelledby="series-title">
+			<p class="series__head">
+				<span class="sr-meta">
 					Part {part + 1} of {series.length}
 				</span>
-			</summary>
-			<ol>
-				{series.map((p) => (
+				<span class="series__name" id="series-title">
+					{post.data.series!.name}
+				</span>
+			</p>
+			{/* Each part is a numbered panel sewn into a strip; the current one is filled. */}
+			<ol class="series__panels">
+				{series.map((p, i) => (
 					<li>
-						{p.id === post.id ? (
-							<span aria-current="page">{p.data.title}</span>
-						) : (
-							<a href={postUrl(p)}>{p.data.title}</a>
-						)}
+						<a
+							href={postUrl(p)}
+							title={p.data.title}
+							aria-label={`Part ${i + 1}: ${p.data.title}`}
+							aria-current={p.id === post.id ? 'page' : undefined}
+						>
+							{i + 1}
+						</a>
 					</li>
 				))}
 			</ol>
-		</details>
+			<details class="series__all">
+				<summary>All parts</summary>
+				<ol>
+					{series.map((p) => (
+						<li>
+							{p.id === post.id ? (
+								<span aria-current="page">{p.data.title}</span>
+							) : (
+								<a href={postUrl(p)}>{p.data.title}</a>
+							)}
+						</li>
+					))}
+				</ol>
+			</details>
+		</nav>
 	)}
 
+	<div class="article-body">
+		{sections.length > 2 && (
+			<nav class="toc-wrap" aria-label="Contents">
+				<details class="toc" id="contents">
+					<summary>
+						Contents <span class="toc__count">{sections.length} sections</span>
+					</summary>
+					<ol>
+						{sections.map((heading) => (
+							<li>
+								<a href={`#${heading.slug}`}>{heading.text}</a>
+							</li>
+						))}
+					</ol>
+				</details>
+			</nav>
+		)}
+		<article class="sr-prose">
+			<slot />
+		</article>
+	</div>
 	{sections.length > 2 && (
-		<details class="toc">
-			<summary>
-				Contents <span class="toc__count">{sections.length} sections</span>
-			</summary>
-			<ol>
-				{sections.map((heading) => (
-					<li>
-						<a href={`#${heading.slug}`}>{heading.text}</a>
-					</li>
-				))}
-			</ol>
-		</details>
+		<a class="toc-return" href="#contents" hidden>
+			<svg viewBox="0 0 18 18" aria-hidden="true">
+				<path d="M4 5h10M4 9h10M4 13h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+			</svg>
+			Contents
+		</a>
 	)}
+	<script>
+		// Contents: an open rail in the left margin on wide screens, a collapsed list under the byline otherwise.
+		// The rail marks the section being read; on narrow screens a "Contents" button returns to the list.
+		const toc = document.querySelector<HTMLDetailsElement>('#contents');
+		if (toc) {
+			const wide = matchMedia('(min-width: 1200px)');
+			const fit = () => (toc.open = wide.matches);
+			fit();
+			wide.addEventListener('change', fit);
 
-	<article class="sr-prose">
-		<slot />
-	</article>
+			const links = new Map(
+				[...toc.querySelectorAll<HTMLAnchorElement>('a')].map((a) => [decodeURIComponent(a.hash.slice(1)), a]),
+			);
+			const targets = [...links.keys()].map((id) => document.getElementById(id)).filter((el) => el !== null);
+			let current: HTMLAnchorElement | undefined;
+			const mark = () => {
+				// The current section is the last heading above the top third of the viewport.
+				const line = innerHeight / 3;
+				const above = targets.filter((el) => el.getBoundingClientRect().top < line).at(-1);
+				const link = above && links.get(above.id);
+				if (link === current) return;
+				current?.removeAttribute('aria-current');
+				link?.setAttribute('aria-current', 'location');
+				current = link;
+			};
+			addEventListener('scroll', mark, { passive: true });
+			mark();
+
+			// The button shows once Contents has scrolled away, and steps aside when the article's end comes into view.
+			const back = document.querySelector<HTMLAnchorElement>('.toc-return')!;
+			const end = document.querySelector('.article-end')!;
+			const seen = new Map<Element, IntersectionObserverEntry>();
+			const watch = new IntersectionObserver((entries) => {
+				for (const entry of entries) seen.set(entry.target, entry);
+				const list = seen.get(toc);
+				const passed = list && !list.isIntersecting && list.boundingClientRect.top < 0;
+				back.hidden = !passed || !!seen.get(end)?.isIntersecting;
+			});
+			watch.observe(toc);
+			watch.observe(end);
+			back.addEventListener('click', () => (toc.open = true));
+		}
+	</script>
 	<dialog class="zoom" aria-label="Full-size image"></dialog>
 	<script>
 		// Screenshots are shrunk to the 680px column; clicking one opens it full size in a native modal
@@ -100,7 +185,9 @@ const next = series.length ? series[part + 1] : newer;
 		const dialog = document.querySelector<HTMLDialogElement>('dialog.zoom')!;
 		const big = dialog.appendChild(new Image());
 		dialog.addEventListener('click', () => dialog.close());
-		for (const img of document.querySelectorAll<HTMLImageElement>('.sr-prose img')) {
+		const wrap = (img: HTMLImageElement) => {
+			// Only images the column actually shrinks: zooming one already shown at full size just adds an empty frame.
+			if (img.naturalWidth <= img.clientWidth) return;
 			const button = document.createElement('button');
 			button.className = 'zoom-trigger';
 			button.ariaLabel = `Enlarge image: ${img.alt}`;
@@ -111,18 +198,15 @@ const next = series.length ? series[part + 1] : newer;
 				big.alt = img.alt;
 				dialog.showModal();
 			});
+		};
+		for (const img of document.querySelectorAll<HTMLImageElement>('.sr-prose img')) {
+			if (img.complete) wrap(img);
+			else img.addEventListener('load', () => wrap(img), { once: true });
 		}
 	</script>
 
 	<footer class="article-end">
 		<Divider />
-		{canonicalUrl && (
-			<p class="sr-meta original">
-				Originally published on <a href={canonicalUrl}>{new URL(canonicalUrl).hostname.replace(/^www\./, '')}</a>
-			</p>
-		)}
-		{tags.length > 0 && <TagList tags={tags} />}
-		<Share title={title} />
 		{(prev || next) && (
 			<nav class="more" aria-label={series.length ? 'More in this series' : 'More essays'}>
 				{prev && (
@@ -148,5 +232,9 @@ const next = series.length ? series[part + 1] : newer;
 				RSS feed
 			</a>
 		</section>
+		<div class="article-foot">
+			{tags.length > 0 && <TagList tags={tags} />}
+			<Share title={title} />
+		</div>
 	</footer>
 </Layout>

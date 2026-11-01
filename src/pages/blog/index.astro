@@ -1,25 +1,30 @@
 ---
-import PostCard from '../../components/PostCard.astro';
+import ArchiveList from '../../components/ArchiveList.astro';
 import TagList from '../../components/TagList.astro';
 import { SITE_TITLE } from '../../consts';
 import Layout from '../../layouts/Layout.astro';
-import { essayCount, getPosts, tagsOf } from '../../posts';
+import { essayCount, getPosts, postsTagged, tagsOf } from '../../posts';
 
 const posts = await getPosts();
-const tags = tagsOf(posts);
+// Most-used topics first; the long tail waits behind a disclosure instead of walling off the archive.
+const tags = tagsOf(posts).sort((a, b) => postsTagged(posts, b).length - postsTagged(posts, a).length);
+const top = tags.slice(0, 6);
+const rest = tags.slice(6).sort();
 ---
 
 <Layout title={`Articles · ${SITE_TITLE}`} description="All articles on software engineering.">
 	<header class="page-head">
 		<h1 class="sr-display">Articles</h1>
 		<p class="sr-meta">{essayCount(posts.length)}, newest first</p>
-		{/* ponytail: a tag filter only helps once there are more posts than tags to pick from */}
-		{posts.length > 3 && <TagList tags={tags} />}
-		<hr class="sr-seam" />
 	</header>
-	<div class="post-grid">
-		{posts.map((post) => (
-			<PostCard post={post} />
-		))}
-	</div>
+	<nav class="topics" aria-label="Topics">
+		<TagList tags={top} />
+		{rest.length > 0 && (
+			<details class="topics__more">
+				<summary>All {tags.length} topics</summary>
+				<TagList tags={rest} />
+			</details>
+		)}
+	</nav>
+	<ArchiveList posts={posts} />
 </Layout>
