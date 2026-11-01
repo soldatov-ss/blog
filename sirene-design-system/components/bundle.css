@@ -218,48 +218,93 @@
 	color: var(--ink);
 }
 
-/* ---------- Nav (floating pill) ---------- */
-.sr-nav {
+/* ---------- Header (monogram bar, not sticky) ---------- */
+.sr-header {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: var(--space-6);
-	background: var(--surface-card);
-	border-radius: var(--radius-pill);
-	padding: 8px 8px 8px 22px;
-	box-shadow: var(--shadow-patch);
-	border: 1px solid var(--hairline);
+	padding: var(--space-3) 0 var(--space-4);
 }
-.sr-nav__mark {
-	padding-block: 11px;
-	font: 500 22px/1 var(--font-display);
-	font-variation-settings: 'SOFT' 100;
-	color: var(--ink);
-	letter-spacing: -0.02em;
+.sr-header::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 2px;
+	background: repeating-linear-gradient(90deg, var(--thread) 0 7px, transparent 7px 12px);
+}
+/* Home mark: a sewn-on button with the floret stitched in the middle. */
+.sr-header__home {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--surface-card);
+	box-shadow: var(--shadow-patch);
+	outline: 1.5px dashed var(--thread);
+	outline-offset: -6px;
+	color: var(--thread);
 	text-decoration: none;
 }
-.sr-nav__mark em {
-	color: var(--gold);
-	font-weight: 400;
+.sr-header__home svg {
+	width: 22px;
+	height: 22px;
+	transition: transform 0.4s ease;
 }
-.sr-nav__links {
+.sr-header__home:hover svg {
+	transform: rotate(45deg);
+}
+.sr-header__home:focus-visible {
+	outline: 2px solid var(--focus-ring);
+	outline-offset: 2px;
+}
+.sr-header__links {
 	display: flex;
 	gap: var(--space-4);
-	margin-left: auto;
 }
-.sr-nav__links a {
+.sr-header__links a {
 	font: 450 15px/24px var(--font-sans);
 	letter-spacing: 0.02em;
 	color: var(--ink-soft);
 	text-decoration: none;
-	padding: 10px 4px;
+	padding: 4px 2px;
 }
-.sr-nav__links a:hover,
-.sr-nav__links a[aria-current] {
+.sr-header__links a:hover,
+.sr-header__links a[aria-current] {
 	color: var(--rose);
 }
-.sr-nav__links a[aria-current] {
+.sr-header__links a[aria-current] {
 	text-decoration: underline 1.5px var(--thread);
 	text-underline-offset: 6px;
+}
+.sr-header__tools {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	margin-left: auto;
+}
+.sr-icon-btn {
+	display: grid;
+	place-items: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	border: 1px solid var(--hairline);
+	background: transparent;
+	color: var(--ink-soft);
+	cursor: pointer;
+}
+.sr-icon-btn:hover {
+	color: var(--rose);
+	border-color: var(--rose);
+}
+.sr-icon-btn svg {
+	width: 18px;
+	height: 18px;
 }
 
 /* ---------- Post card (stitched patch) ---------- */
@@ -452,8 +497,12 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.sr-card,
-	.sr-btn {
+	.sr-btn,
+	.sr-header__home svg {
 		transition: none;
+	}
+	.sr-header__home:hover svg {
+		transform: none;
 	}
 	.sr-card:hover {
 		transform: none;

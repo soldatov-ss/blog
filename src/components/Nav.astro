@@ -1,46 +1,61 @@
 ---
-// Sirene Nav: sirene-design-system/components/Nav
+// Sirene header: sirene-design-system/components/Nav. The floret button is the site mark and the home link.
 import { NAV_LINKS } from '../consts';
 
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 ---
 
-<nav class="sr-nav" aria-label="Main">
-	<a class="sr-nav__mark" href="/">
-		Serhii <em>Soldatov</em>
+<header class="sr-header">
+	<a class="sr-header__home" href="/" aria-label="Home">
+		<svg viewBox="0 0 22 22" aria-hidden="true">
+			<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+				<path d="M11 2c2.4 2.6 2.4 5.4 0 8-2.4-2.6-2.4-5.4 0-8zM11 20c-2.4-2.6-2.4-5.4 0-8 2.4 2.6 2.4 5.4 0 8zM2 11c2.6-2.4 5.4-2.4 8 0-2.6 2.4-5.4 2.4-8 0zM20 11c-2.6 2.4-5.4 2.4-8 0 2.6-2.4 5.4-2.4 8 0z"></path>
+			</g>
+			<circle cx="11" cy="11" r="1.6" fill="var(--coral)"></circle>
+		</svg>
 	</a>
-	<div class="sr-nav__links">
+	<nav class="sr-header__links" aria-label="Main">
 		{NAV_LINKS.map(({ href, label }) => (
 			<a href={href} aria-current={isActive(href) ? 'page' : undefined}>
 				{label}
 			</a>
 		))}
+	</nav>
+	<div class="sr-header__tools">
+		<button class="sr-icon-btn" id="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false">
+			<svg class="moon" viewBox="0 0 18 18" aria-hidden="true">
+				<path
+					d="M14.5 11.2A6 6 0 0 1 6.8 3.5a6 6 0 1 0 7.7 7.7z"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.5"
+					stroke-linejoin="round"
+				></path>
+			</svg>
+			<svg
+				class="sun"
+				viewBox="0 0 16 16"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+				aria-hidden="true"
+			>
+				<circle cx="8" cy="8" r="3"></circle>
+				<path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"></path>
+			</svg>
+		</button>
+		<a class="sr-icon-btn" href="/rss.xml" aria-label="RSS feed">
+			<svg viewBox="0 0 18 18" aria-hidden="true">
+				<g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+					<path d="M4 8a6 6 0 0 1 6 6M4 3.5A10.5 10.5 0 0 1 14.5 14"></path>
+				</g>
+				<circle cx="4.5" cy="13.5" r="1.3" fill="currentColor"></circle>
+			</svg>
+		</a>
 	</div>
-	<button
-		class="sr-btn sr-btn--ghost theme-toggle"
-		id="theme-toggle"
-		type="button"
-		aria-label="Dark theme"
-		aria-pressed="false"
-	>
-		<svg class="moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-			<path d="M13 9.5A5.5 5.5 0 1 1 6.5 3 4.5 4.5 0 0 0 13 9.5Z"></path>
-		</svg>
-		<svg
-			class="sun"
-			viewBox="0 0 16 16"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="1.5"
-			stroke-linecap="round"
-			aria-hidden="true"
-		>
-			<circle cx="8" cy="8" r="3"></circle>
-			<path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"></path>
-		</svg>
-	</button>
-</nav>
+</header>
 
 <script>
 	import { DAY_THEME, NIGHT_THEME, THEME_KEY } from '../consts';

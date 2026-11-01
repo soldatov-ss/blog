@@ -3,7 +3,7 @@ Sirene is the visual language of a personal software blog, borrowed from the col
 ## Principles
 
 1. **Sewn, not drawn.** Separate things with gold-thread seams (`thread`), not grey rules or heavy shadows. A card is a patch stitched onto the page.
-2. **One rose, used sparingly.** `rose` is the only action color: the primary button, links, the active nav item. Everything else is ivory, plum ink and gold.
+2. **One rose, used sparingly.** `rose` is the only action color: the primary button, links, the active header link. Everything else is ivory, plum ink and gold.
 3. **Editorial, slow.** A soft display serif over a warm grotesque, a 680px reading measure, and 96px between sections.
 4. **Ornament at the edges.** Embroidery and rugs frame the content (hero foot, article end, footer). They never sit behind text.
 
@@ -18,7 +18,7 @@ Sirene is the visual language of a personal software blog, borrowed from the col
 
 Two themes share every token name: **Silk** (light, the default) and **Coliseum night** (dark).
 
-- Page: `surface-canvas`. Cards, nav, code: `surface-card`. Washes, tags, callouts, inline code: `surface-tint`. Footer: `surface-deep`.
+- Page: `surface-canvas`. Cards, code, the header home button: `surface-card`. Washes, tags, callouts, inline code: `surface-tint`. Footer: `surface-deep`.
 - Text: headlines in `ink`, prose in `ink-soft`, dates and captions in `ink-muted`. Never pure black or grey.
 - Action: `rose` fill with `on-rose` text. Links are `rose` with a dashed `thread` underline that turns solid on hover.
 - Gold: `gold` is for text (eyebrows, the italic accent word). `thread` is for stitches, seams and fringe, never for body text.
@@ -48,9 +48,9 @@ Don't use more than two ornament kinds in one viewport, and don't put ornament u
 ## Shape and space
 
 - Spacing runs `space-1` (4) to `space-24` (96): 32px card padding (`space-8`) and 96px between sections (`space-24`).
-- Radii: `radius-pill` for buttons, tags and nav; `radius-lg` for cards; `radius-md` for code and callouts; `radius-sm` for inline code.
-- One shadow, `shadow-patch`, for cards and the nav pill. Anything else gets separation from tone or a seam.
-- Layout: a 1080px max content width, a 680px reading column and a floating nav pill. Post grid has 2 columns down to 760px, then 1.
+- Radii: `radius-pill` for buttons and tags; `radius-lg` for cards; `radius-md` for code and callouts; `radius-sm` for inline code.
+- One shadow, `shadow-patch`, for cards and the header's home button. Anything else gets separation from tone or a seam.
+- Layout: a 1080px max content width and a 680px reading column. The header is a non-sticky bar on a running-stitch seam, marked by the floret button rather than a name. Post grid has 2 columns down to 760px, then 1.
 
 ## Imagery
 
@@ -58,7 +58,7 @@ There's no illustration requirement. The textile ornament carries the mood. If y
 
 ## Iconography
 
-Draw thin line icons (1.4–1.6px stroke, round caps) in `currentColor`. The floret is the site's one ornamental glyph. Arrows in buttons are 14px.
+Draw thin line icons (1.4–1.6px stroke, round caps) in `currentColor`. The floret is the site's one ornamental glyph and also its mark: it's the home button in the header. Arrows in buttons are 14px.
 
 ## Consuming in a blog
 
