@@ -133,6 +133,19 @@ main.page {
 	grid-column: 1 / -1;
 	max-width: 760px;
 }
+.project-story {
+	color: var(--rose);
+	text-decoration-color: var(--thread);
+	text-underline-offset: 4px;
+	position: relative;
+	z-index: 1;
+	margin-left: auto;
+	font-size: 14px;
+	white-space: nowrap;
+}
+.post-grid .sr-card__foot {
+	margin-top: auto;
+}
 .tag-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -574,7 +587,7 @@ main.page {
 		margin-top: var(--space-2);
 	}
 	.sr-header {
-		gap: var(--space-4);
+		gap: var(--space-3);
 	}
 	.sr-header__links {
 		gap: var(--space-3);

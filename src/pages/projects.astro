@@ -1,0 +1,66 @@
+---
+// Projects: a short, hand-picked list. Cards are Sirene PostCard patches; the title links to the repo,
+// and "Read the story" links to the essay behind it where there is one.
+import { SITE_TITLE } from '../consts';
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+	{
+		name: 'django-completion',
+		repo: 'https://github.com/soldatov-ss/django-completion',
+		description:
+			'manage.py context for coding agents, and tab completion for you: commands, options and app labels from your own project.',
+		stack: 'Python · Django · Bash · Zsh',
+		story: '/blog/django-manage-py-tab-completion/',
+	},
+	{
+		name: 'django-cognito-sso-demo',
+		repo: 'https://github.com/soldatov-ss/django-cognito-sso-demo',
+		description:
+			'A reference implementation of enterprise SSO with Django and AWS Cognito: Azure AD and Okta over OIDC, role mapping, webhook-based deprovisioning and multi-tenant setup.',
+		stack: 'Python · Django · AWS Cognito',
+		story: '/blog/django-enterprise-sso-with-aws-cognito/',
+	},
+	{
+		name: 'django-referral-system',
+		repo: 'https://github.com/soldatov-ss/django-referral-system',
+		description:
+			'A Django app for running referral programs: promoters, referral tracking, commission payouts, Wise CSV export and click analytics.',
+		stack: 'Python · Django',
+	},
+	{
+		name: 'thanos',
+		repo: 'https://github.com/soldatov-ss/thanos',
+		description: 'A CLI tool that deletes half your files. Perfectly balanced, as all things should be.',
+		stack: 'Python · CLI',
+	},
+];
+---
+
+<Layout title={`Projects · ${SITE_TITLE}`} description="Open-source projects by Serhii Soldatov.">
+	<header class="page-head">
+		<h1 class="sr-display">Projects</h1>
+		<p class="sr-meta">Things I've built and keep on GitHub</p>
+		<hr class="sr-seam" />
+	</header>
+	<div class="post-grid">
+		{projects.map(({ name, repo, description, stack, story }) => (
+			<article class="sr-card sr-stitched">
+				<h2 class="sr-subheading">
+					<a class="sr-card__link" href={repo}>
+						{name}
+					</a>
+				</h2>
+				<p class="sr-card__excerpt">{description}</p>
+				<div class="sr-card__foot">
+					<span class="sr-meta">{stack}</span>
+					{story && (
+						<a class="project-story" href={story}>
+							Read the story →
+						</a>
+					)}
+				</div>
+			</article>
+		))}
+	</div>
+</Layout>

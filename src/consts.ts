@@ -7,6 +7,7 @@ export const SITE_DESCRIPTION = 'Notes and essays on building software.';
 // Main sections, shared by Nav and Footer.
 export const NAV_LINKS = [
 	{ href: '/blog', label: 'Articles' },
+	{ href: '/projects', label: 'Projects' },
 	{ href: '/about', label: 'About' },
 ];
 
