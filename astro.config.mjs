@@ -9,8 +9,7 @@ import { headingAnchors } from './src/heading-anchors.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-	// TODO: set to your real domain (used for RSS, sitemap, canonical URLs)
-	site: 'https://example.com',
+	site: 'https://serhiisoldatov.dev',
 	integrations: [mdx(), sitemap()],
 	markdown: {
 		// Colors come from --astro-code-* tokens mapped to Sirene's code colours in src/styles/site.css.
