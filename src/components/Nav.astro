@@ -61,7 +61,7 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(`${h
 	const sync = () => toggle?.setAttribute('aria-pressed', String(isNight()));
 	sync();
 	osNight.addEventListener('change', sync);
-	toggle?.addEventListener('click', () => {
+	const flip = () => {
 		const night = !isNight();
 		try {
 			if (night === osNight.matches) {
@@ -73,5 +73,7 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(`${h
 			}
 		} catch {}
 		sync();
-	});
+	};
+	// The browser's default view transition cross-fades the old theme into the new one instead of flashing.
+	toggle?.addEventListener('click', () => (document.startViewTransition ? document.startViewTransition(flip) : flip()));
 </script>

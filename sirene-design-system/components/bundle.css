@@ -72,15 +72,24 @@
 	text-transform: uppercase;
 	color: var(--ink-muted);
 }
-/* Links: rose text over a dashed thread stitch that pulls solid on hover. */
+/* Links: rose text over a dashed thread stitch. On hover a solid thread is pulled through it, left to right. */
 .sr-link {
 	color: var(--rose);
 	text-decoration: none;
-	background: linear-gradient(90deg, var(--thread) 0 5px, transparent 5px 8px) repeat-x left bottom / 8px 1.5px;
+	background-image:
+		linear-gradient(var(--thread), var(--thread)), linear-gradient(90deg, var(--thread) 0 5px, transparent 5px 8px);
+	background-size:
+		0% 1.5px,
+		8px 1.5px;
+	background-repeat: no-repeat, repeat-x;
+	background-position: left bottom;
 	padding-bottom: 2px;
+	transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .sr-link:hover {
-	background: var(--thread) no-repeat left bottom / 100% 1.5px;
+	background-size:
+		100% 1.5px,
+		8px 1.5px;
 }
 
 /* ---------- Seams (the signature) ---------- */
@@ -270,6 +279,7 @@
 	text-decoration: none;
 	padding: 4px 12px;
 	border-radius: var(--radius-pill);
+	transition: color 0.15s;
 }
 .sr-header__links a:hover {
 	color: var(--rose);
@@ -298,6 +308,7 @@
 	outline-offset: -4px;
 	color: var(--ink);
 	cursor: pointer;
+	transition: color 0.15s;
 }
 .sr-icon-btn:hover {
 	color: var(--rose);
@@ -533,6 +544,10 @@
 	.sr-card,
 	.sr-btn,
 	.sr-header__home svg {
+		transition: none;
+	}
+	/* The thread still pulls solid on hover, just without the run. */
+	.sr-link {
 		transition: none;
 	}
 	.sr-header__home:hover svg {

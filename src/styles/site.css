@@ -671,26 +671,35 @@ main.page {
 		opacity: 0.6;
 	}
 }
-/* Every text link wears .sr-link's dashed stitch, pulled solid on hover. Longhands, so a rule can still move the stitch (see .share__networks a). */
-.sr-prose a,
+/* Every text link wears .sr-link's stitch and thread pull. Longhands, so a rule can still move the stitch (see .share__networks a). */
+.sr-prose a:not(.heading-anchor),
 .byline-author,
 .original a,
 .share__networks a,
 .project-story {
 	text-decoration: none;
-	background-image: linear-gradient(90deg, var(--thread) 0 5px, transparent 5px 8px);
-	background-size: 8px 1.5px;
-	background-repeat: repeat-x;
+	background-image:
+		linear-gradient(var(--thread), var(--thread)), linear-gradient(90deg, var(--thread) 0 5px, transparent 5px 8px);
+	background-size:
+		0% 1.5px,
+		8px 1.5px;
+	background-repeat: no-repeat, repeat-x;
 	background-position: left bottom;
+	transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-:is(.sr-prose a, .byline-author, .original a, .share__networks a, .project-story):hover {
-	background-image: linear-gradient(var(--thread), var(--thread));
-	background-size: 100% 1.5px;
-	background-repeat: no-repeat;
+:is(.sr-prose a:not(.heading-anchor), .byline-author, .original a, .share__networks a, .project-story):hover {
+	background-size:
+		100% 1.5px,
+		8px 1.5px;
+}
+@media (prefers-reduced-motion: reduce) {
+	:is(.sr-prose a:not(.heading-anchor), .byline-author, .original a, .share__networks a, .project-story) {
+		transition: none;
+	}
 }
 /* High-contrast mode and print drop backgrounds, so the stitch falls back to a real underline. */
 @media (forced-colors: active), print {
-	:is(.sr-link, .sr-prose a, .byline-author, .original a, .share__networks a, .project-story) {
+	:is(.sr-link, .sr-prose a:not(.heading-anchor), .byline-author, .original a, .share__networks a, .project-story) {
 		text-decoration: underline;
 	}
 }
