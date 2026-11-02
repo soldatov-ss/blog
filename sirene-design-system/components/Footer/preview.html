@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=200 subtitle="the rug end" -->
+<!-- @dsCard group="Navigation" height=150 subtitle="sewn labels, mirrors the header" -->
 <!doctype html>
 <html>
 	<head>
@@ -10,23 +10,44 @@
 			.pad {
 				padding: 28px 32px;
 			}
+			.sr-page {
+				--sr-bg-fade: 120px;
+				padding: 24px 32px 0;
+				border-radius: var(--radius-md);
+				overflow: hidden;
+			}
 		</style>
 	</head>
 	<body class="sr">
 		<div class="pad">
-			<footer class="sr-footer" style="margin: -28px -32px">
-				<div class="sr-kilim" aria-hidden="true"></div>
-				<div class="sr-footer__inner">
-					<div>
-						<div class="sr-footer__mark">Serhii <em>writes</em></div>
-						<p style="margin: 10px 0 0; font-size: 14px">Essays on software, woven slowly.</p>
-					</div>
-					<div style="display: flex; gap: 24px; font-size: 15px; align-items: start">
-						<a href="#">RSS</a><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Colophon</a>
-					</div>
-				</div>
-				<div class="sr-fringe" aria-hidden="true"></div>
-			</footer>
+			<div class="sr-page">
+				<footer class="sr-footer">
+					<a class="sr-header__home" href="#" aria-label="Home"
+						><svg viewBox="0 0 22 22" aria-hidden="true">
+							<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+								<path
+									d="M11 2c2.4 2.6 2.4 5.4 0 8-2.4-2.6-2.4-5.4 0-8zM11 20c-2.4-2.6-2.4-5.4 0-8 2.4 2.6 2.4 5.4 0 8zM2 11c2.6-2.4 5.4-2.4 8 0-2.6 2.4-5.4 2.4-8 0zM20 11c-2.6 2.4-5.4 2.4-8 0 2.6-2.4 5.4-2.4 8 0z"
+								/>
+							</g>
+							<circle cx="11" cy="11" r="1.6" fill="var(--coral)" /></svg
+					></a>
+					<nav class="sr-header__links" aria-label="Elsewhere">
+						<a href="#">RSS</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+					</nav>
+					<span class="sr-footer__label">© 2026</span>
+					<a class="sr-icon-btn" href="#top" aria-label="Back to top"
+						><svg viewBox="0 0 18 18" aria-hidden="true">
+							<path
+								d="M9 14V4M4.5 8.5L9 4l4.5 4.5"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.6"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/></svg
+					></a>
+				</footer>
+			</div>
 		</div>
 		<script>
 			/* static preview */

@@ -3,10 +3,6 @@
 	scrollbar-color: var(--thread) transparent;
 	caret-color: var(--rose);
 }
-::selection {
-	background: var(--rose-blush);
-	color: var(--ink);
-}
 html {
 	scroll-padding-top: var(--space-6);
 }
@@ -60,9 +56,7 @@ main:focus {
 	margin: 0 auto;
 	padding-inline: var(--space-6);
 }
-/* Space above the footer lives inside .sr-page so the tweed runs down to the kilim band. */
 body > .sr-page {
-	padding-bottom: var(--space-24);
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -73,6 +67,10 @@ main.page {
 }
 .nav-wrap {
 	margin-top: var(--space-4);
+}
+.footer-wrap {
+	margin-top: var(--space-24);
+	margin-bottom: var(--space-4);
 }
 .sr-header__links a {
 	white-space: nowrap;
@@ -169,8 +167,6 @@ main.page {
 }
 .project-story {
 	color: var(--rose);
-	text-decoration-color: var(--thread);
-	text-underline-offset: 4px;
 	position: relative;
 	z-index: 1;
 	margin-left: auto;
@@ -602,8 +598,9 @@ main.page {
 }
 .share__networks a {
 	color: var(--ink-soft);
-	text-decoration: underline 1px var(--thread);
-	text-underline-offset: 4px;
+	/* The stitch stays under the word, not the padded target. */
+	background-origin: content-box;
+	background-clip: content-box;
 	/* Padding widens each target ("X" alone is 9px); the negative margin keeps the visible gaps even. */
 	padding: 4px 8px;
 	margin-inline: -8px;
@@ -618,42 +615,6 @@ main.page {
 }
 .subscribe p {
 	margin: 0;
-}
-
-.sr-footer__inner {
-	max-width: calc(1080px + 2 * var(--space-8));
-	margin: 0 auto;
-	align-items: center;
-}
-.footer-tagline {
-	margin: 0;
-	font-size: 14px;
-}
-.footer-links {
-	display: flex;
-	gap: var(--space-6);
-	font-size: 15px;
-	align-items: start;
-}
-.footer-social {
-	display: flex;
-	gap: var(--space-2);
-}
-.sr-footer .footer-social .sr-icon-btn {
-	padding: 0;
-	color: var(--on-deep);
-	border-color: color-mix(in srgb, var(--on-deep) 30%, transparent);
-}
-.sr-footer .footer-social .sr-icon-btn:hover {
-	color: var(--thread);
-	border-color: var(--thread);
-	text-decoration: none;
-}
-.footer-copy {
-	flex-basis: 100%;
-	margin: 0;
-	font-size: 13px;
-	letter-spacing: 0.02em;
 }
 
 /* ---------- Article prose ---------- */
@@ -710,13 +671,32 @@ main.page {
 		opacity: 0.6;
 	}
 }
+/* Every text link wears .sr-link's dashed stitch, pulled solid on hover. Longhands, so a rule can still move the stitch (see .share__networks a). */
+.sr-prose a,
+.byline-author,
+.original a,
+.share__networks a,
+.project-story {
+	text-decoration: none;
+	background-image: linear-gradient(90deg, var(--thread) 0 5px, transparent 5px 8px);
+	background-size: 8px 1.5px;
+	background-repeat: repeat-x;
+	background-position: left bottom;
+}
+:is(.sr-prose a, .byline-author, .original a, .share__networks a, .project-story):hover {
+	background-image: linear-gradient(var(--thread), var(--thread));
+	background-size: 100% 1.5px;
+	background-repeat: no-repeat;
+}
+/* High-contrast mode and print drop backgrounds, so the stitch falls back to a real underline. */
+@media (forced-colors: active), print {
+	:is(.sr-link, .sr-prose a, .byline-author, .original a, .share__networks a, .project-story) {
+		text-decoration: underline;
+	}
+}
 .sr-prose a {
 	color: var(--rose);
-	text-decoration: underline 1.5px var(--thread);
-	text-underline-offset: 5px;
-}
-.sr-prose a:hover {
-	text-decoration-color: var(--rose);
+	padding-bottom: 2px;
 }
 .sr-prose strong {
 	color: var(--ink);
@@ -910,8 +890,15 @@ main.page {
 	.sr-header {
 		gap: var(--space-3);
 	}
+	/* Phones keep all three links (no Menu button): a tighter label fits from 375px. */
 	.sr-header__links {
-		gap: var(--space-3);
+		gap: 0;
+	}
+	.sr-header__links a {
+		padding-inline: 9px;
+	}
+	.footer-wrap {
+		margin-top: var(--space-16);
 	}
 	/* ArticleHeader: swap display for heading below 640px */
 	.sr-display,
@@ -972,8 +959,6 @@ main.page {
 	font-weight: 500;
 	letter-spacing: 0.02em;
 	color: var(--ink);
-	text-decoration: underline 1px var(--thread);
-	text-underline-offset: 4px;
 	padding-block: 2px;
 }
 .byline-author:hover {
@@ -992,18 +977,23 @@ main.page {
 }
 .original a {
 	color: var(--rose);
-	text-decoration: underline 1px var(--thread);
-	text-underline-offset: 3px;
 }
 
-/* Below 375px the header doesn't fit: tighten it. */
+/* Below 375px the header doesn't fit: tighten it down to 320px. */
 @media (max-width: 374px) {
-	.sr-header,
-	.sr-header__links {
+	.sr-header {
 		gap: var(--space-2);
 	}
-	.sr-header__home {
-		width: 40px;
-		height: 40px;
+	.sr-header__home,
+	.sr-icon-btn {
+		width: 36px;
+		height: 36px;
+	}
+	.sr-header__links {
+		padding-inline: 4px;
+	}
+	.sr-header__links a {
+		font-size: 14px;
+		padding-inline: 6px;
 	}
 }

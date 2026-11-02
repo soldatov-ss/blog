@@ -1,30 +1,38 @@
 ---
-// Sirene Footer: sirene-design-system/components/Footer (kilim band, deep panel, fringe)
-import { NAV_LINKS, SITE_DESCRIPTION, SITE_TITLE, SOCIAL_LINKS } from '../consts';
+// Sirene Footer: sirene-design-system/components/Footer (sewn labels on the tweed, mirrors the header)
+import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 ---
 
 <footer class="sr-footer">
-	<div class="sr-kilim" aria-hidden="true"></div>
-	<div class="sr-footer__inner">
-		<p class="footer-tagline">{SITE_DESCRIPTION}</p>
-		<div class="footer-links">
-			{NAV_LINKS.map(({ href, label }) => (
-				<a href={href}>{label}</a>
-			))}
-			<a href="/rss.xml">RSS feed</a>
-		</div>
-		<div class="footer-social">
-			{SOCIAL_LINKS.map(({ label, href, icon }) => (
-				<a class="sr-icon-btn" href={href} aria-label={label} rel="me">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d={icon} fill="currentColor" />
-					</svg>
-				</a>
-			))}
-		</div>
-		<p class="footer-copy">
-			&copy; {new Date().getFullYear()} {SITE_TITLE}
-		</p>
-	</div>
-	<div class="sr-fringe" aria-hidden="true"></div>
+	<a class="sr-header__home" href="/" aria-label="Home">
+		<svg viewBox="0 0 22 22" aria-hidden="true">
+			<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+				<path d="M11 2c2.4 2.6 2.4 5.4 0 8-2.4-2.6-2.4-5.4 0-8zM11 20c-2.4-2.6-2.4-5.4 0-8 2.4 2.6 2.4 5.4 0 8zM2 11c2.6-2.4 5.4-2.4 8 0-2.6 2.4-5.4 2.4-8 0zM20 11c-2.6 2.4-5.4 2.4-8 0 2.6-2.4 5.4-2.4 8 0z"></path>
+			</g>
+			<circle cx="11" cy="11" r="1.6" fill="var(--coral)"></circle>
+		</svg>
+	</a>
+	<nav class="sr-header__links" aria-label="Elsewhere">
+		<a href="/rss.xml">RSS</a>
+		{SOCIAL_LINKS.map(({ label, href }) => (
+			<a href={href} rel="me">
+				{label}
+			</a>
+		))}
+	</nav>
+	<span class="sr-footer__label">
+		&copy; {new Date().getFullYear()} {SITE_TITLE}
+	</span>
+	<a class="sr-icon-btn" href="#top" aria-label="Back to top">
+		<svg viewBox="0 0 18 18" aria-hidden="true">
+			<path
+				d="M9 14V4M4.5 8.5 9 4l4.5 4.5"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			></path>
+		</svg>
+	</a>
 </footer>

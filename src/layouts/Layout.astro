@@ -16,11 +16,11 @@ type Props = ComponentProps<typeof BaseHead>;
 	<head>
 		<BaseHead {...Astro.props} />
 	</head>
-	<body class="sr">
+	<body class="sr" id="top">
 		<a class="skip-link" href="#main">
 			Skip to content
 		</a>
-		<!-- Tweed stops at the footer so the bottom band shows like the top one. -->
+		<!-- The tweed (Sirene PageBackground) frames header and footer; everything on it is a sewn-on patch. -->
 		<div class="sr-page">
 			<div class="page nav-wrap">
 				<Nav />
@@ -28,8 +28,10 @@ type Props = ComponentProps<typeof BaseHead>;
 			<main class="page" id="main" tabindex="-1">
 				<slot />
 			</main>
+			<div class="page footer-wrap">
+				<Footer />
+			</div>
 		</div>
-		<Footer />
 		<script>
 			import '../code-block/copy';
 		</script>

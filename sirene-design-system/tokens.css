@@ -14,7 +14,6 @@
 	--surface-canvas: light-dark(#faf4ec, #1b1117);
 	--surface-card: light-dark(#fffaf3, #251820);
 	--surface-tint: light-dark(#f3e6dc, #33212b);
-	--surface-deep: light-dark(#2a1520, #120b0f);
 	--ink: light-dark(#2c1822, #f7ece3);
 	--ink-soft: light-dark(#5a4250, #dcc7c9);
 	--ink-muted: light-dark(#745d6a, #ab949d);
@@ -26,8 +25,6 @@
 	--thread: light-dark(#a37632, #c99a4c);
 	--teal: light-dark(#24686a, #80c9c2);
 	--hairline: light-dark(#e8d8c6, #3d2a33);
-	--on-deep: #f7ece3;
-	--on-deep-muted: light-dark(#c7aeb6, #ab949d);
 	--focus-ring: light-dark(#a8435a, #ef94a2);
 	--shadow-patch:
 		0 1px 0 light-dark(rgba(44, 24, 34, 0.04), rgba(0, 0, 0, 0.3)),

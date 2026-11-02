@@ -1,11 +1,11 @@
-Sirene is the visual language of a personal software blog, borrowed from the coliseum of Sirene in _Clair Obscur: Expedition 33_: a Belle Époque world built from silk, ribbons, gold thread and woven rugs. Think of the page as cloth. Text and UI stay quiet and editorial, and the decoration comes from **how the cloth is sewn together**: seams, embroidery, stitched patches and a rug's fringe.
+Sirene is the visual language of a personal software blog, borrowed from the coliseum of Sirene in _Clair Obscur: Expedition 33_: a Belle Époque world built from silk, gold thread and woven cloth. Think of the page as cloth. Text and UI stay quiet and editorial, and the decoration comes from **how the cloth is sewn together**: seams, embroidery, stitched patches and herringbone tweed.
 
 ## Principles
 
 1. **Sewn, not drawn.** Separate things with gold-thread seams (`thread`), not grey rules or heavy shadows. A card is a patch stitched onto the page.
 2. **One rose, used sparingly.** `rose` is the only action color: the primary button, links, the active header link. Everything else is ivory, plum ink and gold.
 3. **Editorial, slow.** A soft display serif over a warm grotesque, a 680px reading measure, and 96px between sections.
-4. **Ornament at the edges.** Tweed, embroidery and rugs frame the content (under the header, article end, footer). They never sit behind text at full strength.
+4. **Ornament at the edges.** Tweed and embroidery frame the content (under the header, article end, above the footer). They never sit behind text at full strength, and anything placed on the tweed is a solid sewn-on patch.
 
 ## Voice
 
@@ -18,7 +18,7 @@ Sirene is the visual language of a personal software blog, borrowed from the col
 
 Two themes share every token name: **Silk** (light, the default) and **Coliseum night** (dark).
 
-- Page: `surface-canvas`. Cards, code, the header home button: `surface-card`. Washes, tags, callouts, inline code: `surface-tint`. Footer: `surface-deep`.
+- Page: `surface-canvas`. Cards, code, the header home button: `surface-card`. Washes, tags, callouts, inline code: `surface-tint`. Header and footer pieces: `surface-card` patches on the tweed.
 - Text: headlines in `ink`, prose in `ink-soft`, dates and captions in `ink-muted`. Never pure black or grey.
 - Action: `rose` fill with `on-rose` text. Links are `rose` with a dashed `thread` underline that turns solid on hover.
 - Gold: `gold` is for text (eyebrows, the italic accent word). `thread` is for stitches, seams and fringe, never for body text.
@@ -35,14 +35,13 @@ Two themes share every token name: **Silk** (light, the default) and **Coliseum 
 
 ## Textile ornament
 
-| Ornament            | Class                     | Where                                                                   |
-| ------------------- | ------------------------- | ----------------------------------------------------------------------- |
-| Running stitch      | `.sr-seam`                | Section breaks, under article headers                                   |
-| Floret divider      | `.sr-divider`             | End of article, hero to post list                                       |
-| Stitched patch      | `.sr-stitched`            | Post cards (dashed `thread` 8px inside the edge)                        |
-| Cross-stitch band   | `.sr-embroidery`          | Once per page at most, `coral`                                          |
-| Kilim band + fringe | `.sr-kilim`, `.sr-fringe` | Footer only: the rug's end                                              |
-| Herringbone tweed   | `.sr-page`                | Page background at the top and bottom edges, fading out behind the text |
+| Ornament          | Class            | Where                                                                   |
+| ----------------- | ---------------- | ----------------------------------------------------------------------- |
+| Running stitch    | `.sr-seam`       | Section breaks, under article headers                                   |
+| Floret divider    | `.sr-divider`    | End of article, hero to post list                                       |
+| Stitched patch    | `.sr-stitched`   | Post cards (dashed `thread` 8px inside the edge)                        |
+| Cross-stitch band | `.sr-embroidery` | Once per page at most, `coral`                                          |
+| Herringbone tweed | `.sr-page`       | Page background at the top and bottom edges, fading out behind the text |
 
 Don't use more than two ornament kinds in one viewport, and don't put ornament under text.
 
