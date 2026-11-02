@@ -7,7 +7,18 @@ import Layout from '../layouts/Layout.astro';
 	<header class="sr-article-head">
 		<h1 class="sr-display">This seam came loose</h1>
 		<p class="sr-lede">Nothing lives at this address. The page may have moved, or the link has a typo.</p>
-		<hr class="sr-seam" />
+		<div class="loose-seam" role="presentation">
+			<div class="sr-seam"></div>
+			<svg viewBox="0 0 96 40" aria-hidden="true">
+				<path
+					d="M0 1C20 1 30 3 34 11s-5 19 9 21 25-9 21-17-15-4-11 8c3 9 18 14 39 12"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.5"
+					stroke-linecap="round"
+				></path>
+			</svg>
+		</div>
 	</header>
 	<div class="sr-article-head actions">
 		<a class="sr-btn sr-btn--primary" href="/blog/">

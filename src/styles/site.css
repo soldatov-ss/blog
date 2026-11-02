@@ -210,6 +210,58 @@ main.page {
 	display: grid;
 	gap: var(--space-12);
 }
+/* The end of an essay gets sewn shut: as the divider scrolls in, both seams run in to the floret and it turns a quarter, a knot tied.
+   Scroll-driven, so it plays at the reader's pace; browsers without view timelines show the finished divider. */
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		.article-end .sr-divider {
+			view-timeline: --essay-end;
+		}
+		/* Longhands only: the CSS minifier folds an `animation` shorthand plus a timeline into `animation: none`. */
+		.article-end .sr-divider > * {
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: --essay-end;
+			animation-range: entry 40% cover 40%;
+		}
+		.article-end .sr-divider .sr-seam {
+			animation-name: seam-in;
+			transform-origin: right;
+		}
+		.article-end .sr-divider .sr-seam:last-child {
+			transform-origin: left;
+		}
+		.article-end .sr-divider svg {
+			animation-name: knot;
+		}
+	}
+}
+@keyframes seam-in {
+	from {
+		transform: scaleX(0.15);
+	}
+}
+@keyframes knot {
+	from {
+		transform: rotate(-90deg);
+	}
+}
+/* 404: the seam under the headline runs out and its thread hangs loose. */
+.loose-seam {
+	display: flex;
+	align-items: flex-start;
+	margin-top: var(--space-2);
+	color: var(--thread);
+}
+.loose-seam .sr-seam {
+	flex: 1;
+}
+.loose-seam svg {
+	width: 96px;
+	height: 40px;
+	flex: none;
+	overflow: visible;
+}
 /* Long titles: the article head carries a title, not a hero line. */
 .sr-article-head .sr-display {
 	font-size: 48px;
