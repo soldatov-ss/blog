@@ -2,7 +2,6 @@
 title: 'Django without the mess: repositories for data, services for rules'
 description: 'Why selectors are a trap for cleaning up fat Django models, and how repositories for data access plus services for business rules keep the layers apart.'
 pubDate: '2025-09-07'
-canonicalUrl: 'https://dev.to/soldatov-ss/django-without-the-mess-repositories-for-data-services-for-rules-k8e'
 heroImage: './cover.webp'
 tags: ['django', 'python', 'architecture', 'clean-code']
 ---

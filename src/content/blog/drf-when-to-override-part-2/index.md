@@ -2,7 +2,6 @@
 title: 'Django REST Framework: when (and when not) to override serializers and viewsets, part 2'
 description: 'Part 2 covers ViewSets: when to override create versus perform_create, how update, partial_update, and perform_update fit together, and a cheat sheet for where each kind of logic goes.'
 pubDate: '2025-08-10'
-canonicalUrl: 'https://dev.to/soldatov-ss/part-2-django-rest-framework-when-and-when-not-to-override-serializers-and-viewsets-3j32'
 heroImage: './cover.webp'
 tags: ['django', 'drf', 'architecture', 'clean-code']
 series: { name: 'Django REST Framework overrides', part: 2 }

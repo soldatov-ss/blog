@@ -2,7 +2,6 @@
 title: 'From Django library to AWS Cognito: my journey building enterprise SSO'
 description: 'How a multi-provider SSO requirement took me from rewriting a Django SSO library to an AWS Cognito setup where adding a new identity provider needs no server code changes.'
 pubDate: '2026-04-12'
-canonicalUrl: 'https://dev.to/soldatov-ss/from-django-library-to-aws-cognito-my-journey-building-enterprise-sso-30be'
 heroImage: './cover.webp'
 tags: ['django', 'aws', 'cognito', 'sso']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 6 }

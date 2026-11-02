@@ -2,7 +2,6 @@
 title: 'How to test SSO authentication with Cognito and OIDC providers'
 description: 'How to test SSO login and logout through AWS Cognito with an external OIDC provider, check that the user was created, and what a failed group validation looks like.'
 pubDate: '2026-04-12'
-canonicalUrl: 'https://dev.to/soldatov-ss/how-to-test-sso-authentication-with-cognito-and-oidc-providers-894'
 tags: ['sso', 'testing', 'cognito', 'oidc']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 4 }
 ---

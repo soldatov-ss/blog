@@ -2,7 +2,6 @@
 title: 'Boost your Django Docker images by using uv package and project manager'
 description: 'A multi-stage Dockerfile for Django that installs dependencies with uv, uses cache mounts for faster rebuilds, and works around a .venv permission issue. In my project the build went from 34.6s to 15.8s.'
 pubDate: '2025-03-30'
-canonicalUrl: 'https://dev.to/soldatov-ss/boost-your-django-docker-images-by-using-uv-package-and-project-manager-16lj'
 tags: ['python', 'uv', 'django', 'docker']
 ---
 

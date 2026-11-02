@@ -2,7 +2,6 @@
 title: 'Migrating a production Django app from Elasticsearch to OpenSearch'
 description: 'How a one-line urllib3 security bump turned into migrating a Django app from elasticsearch-py to opensearch-py, and what we vendored to keep the API responses unchanged.'
 pubDate: '2026-09-25'
-canonicalUrl: 'https://hackernoon.com/migrating-a-production-django-app-from-elasticsearch-to-opensearch'
 heroImage: './cover.png'
 tags: ['python', 'django', 'opensearch', 'security']
 ---

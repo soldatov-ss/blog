@@ -2,7 +2,6 @@
 title: 'How I added project-aware tab completion to Django''s manage.py'
 description: 'Django''s bundled bash completion only knows command names and flags. django-completion adds app labels and migration names by reading a JSON cache that is rebuilt after each manage.py command, so Tab never loads Django.'
 pubDate: '2026-05-21'
-canonicalUrl: 'https://dev.to/soldatov-ss/how-i-added-project-aware-tab-completion-to-djangos-managepy-4728'
 heroImage: './cover.webp'
 tags: ['django', 'python', 'shell', 'developer-tooling']
 ---

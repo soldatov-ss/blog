@@ -2,7 +2,6 @@
 title: 'Almost done: the hidden tradeoffs of Playwright E2E testing in a fast-moving app'
 description: 'A week of investigating Playwright on a fast-moving UI ended with a recommendation to stop. Four hidden costs that make end-to-end tests cheap to start and expensive to keep.'
 pubDate: '2026-06-07'
-canonicalUrl: 'https://dev.to/soldatov-ss/almost-done-the-hidden-tradeoffs-of-playwright-e2e-testing-in-a-fast-moving-app-i8l'
 heroImage: './cover.png'
 tags: ['playwright', 'e2e-testing', 'engineering-judgment']
 ---

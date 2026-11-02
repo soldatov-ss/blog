@@ -2,7 +2,6 @@
 title: 'Azure single sign-on (SSO) setup: a step-by-step guide'
 description: 'How to register an app in Azure (Microsoft Entra ID) for OIDC SSO: scopes, group claims, API permissions, app roles, groups, user soft-deletion, and optional MFA.'
 pubDate: '2026-04-11'
-canonicalUrl: 'https://dev.to/soldatov-ss/azure-single-sign-on-sso-setup-a-step-by-step-guide-2fjd'
 tags: ['azure', 'sso', 'authentication', 'oidc']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 1 }
 ---

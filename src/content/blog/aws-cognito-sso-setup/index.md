@@ -2,7 +2,6 @@
 title: 'How to configure AWS Cognito for SSO: a step-by-step guide'
 description: 'How to set up AWS Cognito for multi-tenant SSO: an app client per customer, a custom groups attribute, external OIDC providers, and a managed login page.'
 pubDate: '2026-04-12'
-canonicalUrl: 'https://dev.to/soldatov-ss/how-to-configure-aws-cognito-for-sso-a-step-by-step-guide-3j44'
 tags: ['aws', 'cognito', 'sso', 'oidc']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 3 }
 ---

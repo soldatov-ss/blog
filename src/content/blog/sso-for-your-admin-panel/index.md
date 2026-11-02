@@ -2,7 +2,6 @@
 title: 'How to set up SSO authentication in your app''s admin panel'
 description: 'How to configure SSO account and notification settings in a Django admin panel backed by AWS Cognito, automate the setup through an admin API, and trigger user soft-deletes from Azure and Okta.'
 pubDate: '2026-04-12'
-canonicalUrl: 'https://dev.to/soldatov-ss/how-to-set-up-sso-authentication-in-your-apps-admin-panel-36k3'
 tags: ['sso', 'authentication', 'django', 'cognito']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 5 }
 ---

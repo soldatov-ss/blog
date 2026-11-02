@@ -2,7 +2,6 @@
 title: 'Django REST Framework: when (and when not) to override serializers and viewsets, part 1'
 description: 'Part 1 covers serializers: which methods to override for validation, saving, and output formatting, and what logic does not belong in a serializer at all.'
 pubDate: '2025-08-10'
-canonicalUrl: 'https://dev.to/soldatov-ss/part-1-django-rest-framework-when-and-when-not-to-override-serializers-and-viewsets-11a7'
 heroImage: './cover.webp'
 tags: ['django', 'drf', 'architecture', 'clean-code']
 series: { name: 'Django REST Framework overrides', part: 1 }
