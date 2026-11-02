@@ -20,12 +20,15 @@ type Props = ComponentProps<typeof BaseHead>;
 		<a class="skip-link" href="#main">
 			Skip to content
 		</a>
-		<div class="page nav-wrap">
-			<Nav />
+		<!-- Tweed stops at the footer so the bottom band shows like the top one. -->
+		<div class="sr-page">
+			<div class="page nav-wrap">
+				<Nav />
+			</div>
+			<main class="page" id="main" tabindex="-1">
+				<slot />
+			</main>
 		</div>
-		<main class="page" id="main" tabindex="-1">
-			<slot />
-		</main>
 		<Footer />
 		<script>
 			import '../code-block/copy';
