@@ -35,7 +35,7 @@ Changing software that people already rely on: real changes to live production s
 ## Brand Commitments
 
 - Name: Serhii Soldatov. Voice: first person, plain and direct, with occasional dry humour (the road to Mordor, the 404 "This seam came loose").
-- The visual identity is the Sirene design system in `sirene-design-system/`, inspired by Sirene's coliseum in *Clair Obscur: Expedition 33*. The About page credits it.
+- The visual identity is the Sirene design system in `sirene-design-system/`, inspired by Sirene's coliseum in _Clair Obscur: Expedition 33_. The About page credits it.
 
 ## Evidence on Hand
 

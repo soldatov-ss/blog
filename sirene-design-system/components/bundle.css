@@ -12,6 +12,15 @@
 	background: var(--surface-canvas);
 	-webkit-font-smoothing: antialiased;
 }
+/* Light text on the dark plum loses its thin strokes, so night text is a touch heavier. */
+:root[data-theme='coliseum'] .sr {
+	font-weight: 380;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='silk']) .sr {
+		font-weight: 380;
+	}
+}
 .sr :focus-visible {
 	outline: 2px solid var(--focus-ring);
 	outline-offset: 2px;

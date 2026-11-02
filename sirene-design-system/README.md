@@ -29,7 +29,7 @@ Two themes share every token name: **Silk** (light, the default) and **Coliseum 
 ## Typography
 
 - **Display: Fraunces** (Google Fonts) at weight 500 with `SOFT 100`, which gives a warm, rounded stand-in for Mackinac. Styles: `display` 64px at −0.045em, `heading` 36px, `subheading` 22px. Italic accents use weight 400.
-- **Text: Bricolage Grotesque** (Google Fonts, the face Fly.io calls "Fricolage"). Prose uses `body` 18/30 at the light weight 350 with slight positive tracking. Excerpts and UI use `body-sm`, standfirsts use `lede`, and eyebrows use `caption` (uppercase, 0.08em).
+- **Text: Bricolage Grotesque** (Google Fonts, the face Fly.io calls "Fricolage"). Prose uses `body` 18/30 at the light weight 350 with slight positive tracking; in Coliseum night text goes up to 380 so the strokes hold on the dark ground. Excerpts and UI use `body-sm`, standfirsts use `lede`, and eyebrows use `caption` (uppercase, 0.08em).
 - **Code: JetBrains Mono** via the `code` style.
 - Pairing rule: serif for headlines only, grotesque for everything else. Use negative tracking on the serif and positive tracking on small sans.
 
