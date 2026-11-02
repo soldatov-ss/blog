@@ -220,7 +220,6 @@ main.page {
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 10px;
-	max-width: 820px;
 	margin-bottom: var(--space-16);
 }
 .topics__more summary {
@@ -242,7 +241,6 @@ main.page {
 .archive {
 	display: grid;
 	gap: var(--space-16);
-	max-width: 820px;
 }
 .archive__year {
 	display: grid;
