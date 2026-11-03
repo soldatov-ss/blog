@@ -5,6 +5,9 @@
 }
 html {
 	scroll-padding-top: var(--space-6);
+	/* iOS Safari otherwise enlarges text in wide, sideways-scrolling blocks, so some code blocks rendered huge. */
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
 }
 
 body {
