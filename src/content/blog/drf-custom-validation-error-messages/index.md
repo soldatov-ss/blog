@@ -1,9 +1,12 @@
 ---
 title: 'Why Django REST Framework doesn''t show your custom validation error messages (and what to do about it)'
-description: 'DRF validates at the serializer level and skips model full_clean(), so custom messages on model constraints never reach the API response. Three ways to work around it.'
+description: 'DRF skips model full_clean(), so custom constraint messages may never reach your API. What DRF 3.17 fixed, what it didn''t, and three workarounds.'
 pubDate: '2025-05-21'
+updatedDate: '2026-11-08'
 tags: ['django', 'drf', 'python']
 ---
+
+> **Update, November 2026:** DRF 3.17.0 fixed the most common case. A multi-field `UniqueConstraint`, like the example below, now passes its `violation_error_message` through to the API response. A single-field `UniqueConstraint(fields=['email'])` still returns DRF's default message (`"… with this email already exists."`). Tested on DRF 3.16.1, 3.17.0 and 3.18.3 with Django 6.1. If you're on 3.16 or older, upgrade first. The workarounds below are for older versions and the single-field case.
 
 The GitHub Discussion: [link](https://github.com/encode/django-rest-framework/discussions/7850)
 
@@ -35,7 +38,7 @@ This is what the DRF maintainers had to say about it:
 
 - It intentionally avoids calling Django's `full_clean()` in this processes, as serializers are meant to validate incoming data instead of an already-created model instance.
 
-- Due to the complexity and backward compatibility issues, there are no immediate plans from DRF for changing this behavior.
+- Due to the complexity and backward compatibility issues, there were no immediate plans from DRF for changing this behavior. (DRF 3.17 later changed it for multi-field `UniqueConstraint`; see the update above.)
 
 In other words - DRF prioritises serialiser checking for API input, which means that unless you explicitly call model checking (e.g. via `full_clean()`), constraint errors and their custom messages will never be called or shown in API responses.
 
@@ -89,7 +92,7 @@ class MyModelSerializer(serializers.ModelSerializer):
 
 ### Summary:
 
-**Issue**: DRF doesn't carry forward any custom validation messages defined in Django.
+**Issue**: DRF doesn't carry forward most custom validation messages defined in Django. Since DRF 3.17, multi-field `UniqueConstraint` messages are the exception.
 
 **Reason**: For reasons of architecture and backward compatibility, DRF validates its data independently from Django's model validation.
 
