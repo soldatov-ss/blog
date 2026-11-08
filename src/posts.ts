@@ -51,10 +51,13 @@ export const relatedTo = (posts: Post[], post: Post, n = 3) => {
 		const count = postsTagged(posts, tag).length;
 		return count > posts.length / 3 ? 0 : 1 / count;
 	};
-	const score = (p: Post) => p.data.tags.filter((t) => post.data.tags.includes(t)).reduce((sum, t) => sum + weight(t), 0);
+	const score = (p: Post) =>
+		p.data.tags.filter((t) => post.data.tags.includes(t)).reduce((sum, t) => sum + weight(t), 0);
 	const series = post.data.series?.name;
 	return posts
-		.filter((p) => p.id !== post.id && (p.data.series ? p.data.series.name !== series && p.data.series.part === 1 : true))
+		.filter(
+			(p) => p.id !== post.id && (p.data.series ? p.data.series.name !== series && p.data.series.part === 1 : true),
+		)
 		.map((p) => ({ p, score: score(p) }))
 		.filter(({ score }) => score > 0)
 		.sort((a, b) => b.score - a.score)

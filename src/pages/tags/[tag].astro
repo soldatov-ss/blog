@@ -21,7 +21,9 @@ const { posts } = Astro.props;
 const label = tagLabel(tag);
 ---
 
-<Layout title={`${label} · ${SITE_TITLE}`} description={`Articles tagged ${label}.`}
+<Layout
+	title={`${label} · ${SITE_TITLE}`}
+	description={`Articles tagged ${label}.`}
 	noindex={posts.length < MIN_INDEXED_TAG_POSTS}
 >
 	<header class="page-head">

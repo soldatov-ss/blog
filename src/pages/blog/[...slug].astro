@@ -8,7 +8,13 @@ export async function getStaticPaths() {
 	// Newest first, so the newer essay is the one before this one in the list.
 	return posts.map((post, i) => ({
 		params: { slug: post.id },
-		props: { post, newer: posts[i - 1], older: posts[i + 1], series: seriesOf(posts, post), related: relatedTo(posts, post) },
+		props: {
+			post,
+			newer: posts[i - 1],
+			older: posts[i + 1],
+			series: seriesOf(posts, post),
+			related: relatedTo(posts, post),
+		},
 	}));
 }
 
