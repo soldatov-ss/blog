@@ -20,3 +20,7 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## SEO
+
+Before changing `<head>`, structured data, the sitemap, robots, headers, redirects, URLs, titles or descriptions, read [docs/SEO.md](docs/SEO.md): what's been done, why, and what's next.
