@@ -1,5 +1,5 @@
 ---
-title: 'Why Django REST Framework doesn''t show your custom validation error messages (and what to do about it)'
+title: 'Why Django REST Framework ignores your custom validation error messages'
 description: 'DRF skips model full_clean(), so custom constraint messages may never reach your API. What DRF 3.17 fixed, what it didn''t, and three workarounds.'
 pubDate: '2025-05-21'
 updatedDate: '2026-11-08'
