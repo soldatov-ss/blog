@@ -14,32 +14,64 @@ interface Props {
 	markdown?: string;
 	/** Original URL when the page is a republished copy; defaults to this page. */
 	canonical?: string;
+	/** Keep this page out of search results (404, thin tag pages). */
+	noindex?: boolean;
 }
 
-const { title, description, image, published, modified, markdown, canonical } = Astro.props;
+const { title, description, image, published, modified, markdown, canonical, noindex } = Astro.props;
 
 const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname.replace(/\/$/, '');
 
 // A 1200px JPEG for link previews. Pass a still: animated GIFs are too large for social cards (see heroStill).
 const shareImage = image && new URL((await getImage({ src: image, width: 1200, format: 'jpg' })).src, Astro.url);
 
-// schema.org Article: how search engines and AI answer engines attribute and cite a post.
-const articleLd = published && {
-	'@context': 'https://schema.org',
-	'@type': 'BlogPosting',
-	headline: title,
-	description,
-	url: canonicalURL,
-	datePublished: published.toISOString(),
-	dateModified: (modified ?? published).toISOString(),
-	author: {
-		'@type': 'Person',
-		name: SITE_TITLE,
-		url: new URL('/about/', Astro.site),
-		sameAs: SOCIAL_LINKS.map((link) => link.href),
-	},
-	...(shareImage && { image: shareImage }),
+// schema.org: who the author is and what each page is, so search engines and AI answer engines attribute and cite it.
+// One Person @id across pages lets them join the posts, the About page and the profiles into one entity.
+const person = {
+	'@type': 'Person',
+	'@id': new URL('/about/#person', Astro.site),
+	name: SITE_TITLE,
+	jobTitle: 'Software engineer',
+	url: new URL('/about/', Astro.site),
+	sameAs: SOCIAL_LINKS.map((link) => link.href),
 };
+const ld = published
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'BlogPosting',
+			headline: title,
+			description,
+			url: canonicalURL,
+			mainEntityOfPage: canonicalURL,
+			inLanguage: 'en',
+			datePublished: published.toISOString(),
+			dateModified: (modified ?? published).toISOString(),
+			author: person,
+			...(shareImage && { image: shareImage }),
+		}
+	: path === ''
+		? {
+				'@context': 'https://schema.org',
+				'@graph': [
+					{
+						'@type': 'WebSite',
+						'@id': new URL('/#website', Astro.site),
+						url: new URL('/', Astro.site),
+						name: SITE_TITLE,
+						description,
+						inLanguage: 'en',
+						publisher: { '@id': person['@id'] },
+					},
+					person,
+				],
+			}
+		: path === '/about' && {
+				'@context': 'https://schema.org',
+				'@type': 'ProfilePage',
+				url: canonicalURL,
+				mainEntity: person,
+			};
 ---
 
 <!-- Global Metadata -->
@@ -49,7 +81,7 @@ const articleLd = published && {
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href="/sitemap.xml" />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('rss.xml', Astro.site)} />
 <meta name="generator" content={Astro.generator} />
 <!-- Copies of --surface-canvas (sirene-design-system/tokens.css): meta tags can't read CSS variables. -->
@@ -70,9 +102,9 @@ const articleLd = published && {
 </script>
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalURL} />}
 {markdown && <link rel="alternate" type="text/markdown" href={markdown} />}
-{articleLd && <script type="application/ld+json" set:html={JSON.stringify(articleLd).replaceAll('<', '\\u003c')} />}
+{ld && <script type="application/ld+json" set:html={JSON.stringify(ld).replaceAll('<', '\\u003c')} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -80,7 +112,7 @@ const articleLd = published && {
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={published ? 'article' : 'website'} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:site_name" content={SITE_TITLE} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

@@ -116,7 +116,7 @@ By adding your project's source after installing dependencies, Docker efficientl
 ```dockerfile
 FROM base
 COPY --from=builder /app /app
-ENV PATH="/app/venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000
 
 CMD ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]

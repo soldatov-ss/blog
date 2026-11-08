@@ -2,7 +2,6 @@
 
 import mdx from '@astrojs/mdx';
 import { satteri } from '@astrojs/markdown-satteri';
-import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 import { codeFrame } from './src/code-block/transformer.mjs';
 import { headingAnchors } from './src/heading-anchors.mjs';
@@ -10,7 +9,7 @@ import { headingAnchors } from './src/heading-anchors.mjs';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://serhiisoldatov.dev',
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx()],
 	markdown: {
 		// Colors come from --astro-code-* tokens mapped to Sirene's code colours in src/styles/site.css.
 		shikiConfig: { theme: 'css-variables', transformers: [codeFrame] },

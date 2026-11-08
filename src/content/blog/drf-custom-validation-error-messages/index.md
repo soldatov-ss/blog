@@ -70,7 +70,7 @@ class CustomUniqueValidator(UniqueTogetherValidator):
 ```
 
 -  **Sometimes just double your validation code:**
-Sometimes, custom validators and extra abstractions aren't needed. Although we all know the DRY principle, sometimes it's acceptable to just dublicate simple validation logicdirectly into your serializer
+Sometimes, custom validators and extra abstractions aren't needed. Although we all know the DRY principle, sometimes it's acceptable to just duplicate simple validation logic directly into your serializer
 
 ```python
 class MyModelSerializer(serializers.ModelSerializer):

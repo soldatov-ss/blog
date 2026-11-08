@@ -41,6 +41,8 @@ export const seriesOf = (posts: Post[], post: Post) => {
 };
 
 export const postsTagged = (posts: Post[], tag: string) => posts.filter((post) => post.data.tags.includes(tag));
+/** Tag pages with fewer posts are thin: noindexed and left out of the sitemap. */
+export const MIN_INDEXED_TAG_POSTS = 3;
 export const essayCount = (n: number) => `${n} ${n === 1 ? 'essay' : 'essays'}`;
 /** Raw Markdown copy of a post, for agents and LLMs (src/pages/blog/[slug].md.ts). */
 export const markdownUrl = (post: Post) => `/blog/${post.id}.md`;

@@ -6,7 +6,7 @@ tags: ['azure', 'sso', 'authentication', 'oidc']
 series: { name: 'Enterprise SSO with Django and AWS Cognito', part: 1 }
 ---
 
-To enable Single Sign-On (SSO) for your application, we first need to register it in **Azure Active**  
+To enable Single Sign-On (SSO) for your application, we first need to register it in **Microsoft Entra ID** (formerly Azure Active Directory).
 
 Navigate to Microsoft Entra ID:
 
@@ -502,7 +502,7 @@ Note! after updating page it won't be visible anymore
 
 ![Client secret list with the Value column to copy](./image-43.png)
 
-### Copy a issuer URL
+### Copy the issuer URL
 
 Reference:[ ](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri)[https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri)
 

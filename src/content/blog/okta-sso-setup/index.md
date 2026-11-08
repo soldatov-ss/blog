@@ -401,7 +401,7 @@ If a user with the **same email** exists in your application, that user will als
 
 Multi-Factor Authentication (MFA) adds an additional layer of security to user login. When enabled, users must verify their identity using a second factor, such as the **Okta Verify app**, in addition to their password.
 
-In the side menu, navigate to the **Global Session Policy** page. Сlick **Add policy** button
+In the side menu, navigate to the **Global Session Policy** page. Click **Add policy** button
 
 
 ![Global Session Policy page with the Add policy button](./image-57.png)
@@ -499,7 +499,7 @@ Instructions for copying the whole information that we should fill in your appli
 
 ![Application settings showing the Okta domain](./image-73.png)
 
-### Copy a issuer URL
+### Copy the issuer URL
 
 To obtain the Issuer URL for your application, open: **https://{yourOktaDomain}/.well-known/openid-configuration** (In my case it is: https://integrator-1609932.okta.com/.well-known/openid-configuration)
 
