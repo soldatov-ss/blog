@@ -41,6 +41,26 @@ export const seriesOf = (posts: Post[], post: Post) => {
 };
 
 export const postsTagged = (posts: Post[], tag: string) => posts.filter((post) => post.data.tags.includes(tag));
+/**
+ * Up to `n` other posts that share tags with `post`, outside its own series (the series nav already links those).
+ * Tags on more than a third of all posts (django, python) say too little to relate two essays, so they don't count;
+ * a shared rare tag counts for more than a common one. Another series gets one slot, for its first part.
+ */
+export const relatedTo = (posts: Post[], post: Post, n = 3) => {
+	const weight = (tag: string) => {
+		const count = postsTagged(posts, tag).length;
+		return count > posts.length / 3 ? 0 : 1 / count;
+	};
+	const score = (p: Post) => p.data.tags.filter((t) => post.data.tags.includes(t)).reduce((sum, t) => sum + weight(t), 0);
+	const series = post.data.series?.name;
+	return posts
+		.filter((p) => p.id !== post.id && (p.data.series ? p.data.series.name !== series && p.data.series.part === 1 : true))
+		.map((p) => ({ p, score: score(p) }))
+		.filter(({ score }) => score > 0)
+		.sort((a, b) => b.score - a.score)
+		.slice(0, n)
+		.map(({ p }) => p);
+};
 /** Tag pages with fewer posts are thin: noindexed and left out of the sitemap. */
 export const MIN_INDEXED_TAG_POSTS = 3;
 export const essayCount = (n: number) => `${n} ${n === 1 ? 'essay' : 'essays'}`;

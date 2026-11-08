@@ -625,6 +625,15 @@ main.page {
 .more__link:hover .sr-subheading {
 	color: var(--rose);
 }
+.related {
+	display: grid;
+}
+.related .sr-heading {
+	margin-bottom: var(--space-4);
+}
+.related__excerpt {
+	color: var(--ink-soft);
+}
 .article-foot {
 	display: grid;
 	gap: var(--space-4);

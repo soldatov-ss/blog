@@ -16,18 +16,22 @@ interface Props {
 	older?: Post;
 	/** Every part of this post's series in order, or []. */
 	series?: Post[];
+	/** Other essays on the same topics (posts.ts relatedTo). */
+	related?: Post[];
 }
 
-const { post, headings, newer, older, series = [] } = Astro.props;
+const { post, headings, newer, older, series = [], related = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
 // Contents lists the h2 sections; posts structured in h3s (fewer than three h2s) list those instead.
 const h2s = headings.filter((heading) => heading.depth === 2);
 const sections = h2s.length > 2 ? h2s : headings.filter((heading) => heading.depth === 3);
 // Covers aren't shown on the page (they're dark title cards that repeat the headline); they're only the link preview.
-// Inside a series, the end-of-article links walk the series instead of the archive.
+// Inside a series, the end-of-article links walk the series. Outside one, related essays replace the
+// archive's older/newer links, which stay only for posts with nothing related.
 const part = series.findIndex((p) => p.id === post.id);
-const prev = series.length ? series[part - 1] : older;
-const next = series.length ? series[part + 1] : newer;
+const walkArchive = !series.length && !related.length;
+const prev = series.length ? series[part - 1] : walkArchive ? older : undefined;
+const next = series.length ? series[part + 1] : walkArchive ? newer : undefined;
 ---
 
 <Layout
@@ -221,6 +225,19 @@ const next = series.length ? series[part + 1] : newer;
 						<span class="sr-subheading">{next.data.title}</span>
 					</a>
 				)}
+			</nav>
+		)}
+		{related.length > 0 && (
+			<nav class="related" aria-labelledby="related-title">
+				<h2 class="sr-heading" id="related-title">
+					Related essays
+				</h2>
+				{related.map((p) => (
+					<a class="more__link" href={postUrl(p)}>
+						<span class="sr-subheading">{p.data.title}</span>
+						<span class="related__excerpt">{p.data.description}</span>
+					</a>
+				))}
 			</nav>
 		)}
 		<section class="subscribe" aria-labelledby="subscribe-title">
