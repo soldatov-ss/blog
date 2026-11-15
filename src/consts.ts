@@ -3,6 +3,8 @@
 
 export const SITE_TITLE = 'Serhii Soldatov';
 export const SITE_DESCRIPTION = 'Notes and essays on building software.';
+// The home page's headline, also on the default share image.
+export const SITE_TAGLINE = 'Changing software that people already rely on';
 
 // Main sections, shown in the Nav.
 export const NAV_LINKS = [

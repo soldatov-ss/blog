@@ -2,7 +2,7 @@
 
 Read this before changing anything that affects search: `<head>`, structured data, the sitemap, robots, headers, redirects, URLs, titles or descriptions.
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-15.
 
 ## Where things stand
 
@@ -65,6 +65,14 @@ The technical and schema fixes below are deployed and checked on the live site. 
 - Posts from the same series are skipped. Another series gets one slot, for its part 1.
 - Outside a series, related essays replace the older/newer links. Older/newer show only when nothing is related.
 
+**Share images** (`src/og.ts`):
+
+- Every page has an `og:image` and `summary_large_image`.
+- One card design for everything. Each post gets `/og/blog/<id>.jpg` with its title on the card, and every other page shares `/og.jpg`, which carries the home headline (`SITE_TAGLINE`). A post's `heroImage` and `heroStill` are no longer used for the preview.
+- The cards are rendered at build time. `src/assets/og-card.png` is the design with the title area left empty: the floret, the divider and the site name are part of the picture. Satori lays out the title and sharp puts it on the card and writes the JPEG.
+- To change the design, replace `og-card.png` (1200×630) and keep the title area empty. If that area moves, update `TITLE_BOX` in `src/og.ts`.
+- The title font is a static TTF in `src/assets/fonts/`. Satori can't set variable axes, so Fraunces is a fixed instance with SOFT 100, opsz 72 and weight 500. Each title is measured and gets the largest size that fits, from 68px (two lines, as in the design) down.
+
 **Content fixes:**
 
 - **Typos:** a Cyrillic "С" in "Click" in the Okta guide; "Copy a issuer URL" in the Okta and Azure guides; "dublicate" in the DRF post.
@@ -88,6 +96,19 @@ After the 2026-11-08 push, `/seo drift compare` on these three pages should show
 
 Not baselined: tag pages (the `noindex` on thin ones), and Core Web Vitals (no PageSpeed API key).
 
+### Search Console, first snapshot (2026-11-06, exported 2026-11-10)
+
+38 pages were indexed and 11 weren't. Impressions were in single digits per day. Nothing needs fixing.
+
+| Reason                             | Pages | Why                                                                                                                                                                              |
+| ---------------------------------- | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Page with redirect                 | 5     | Expected. Probably the old sitemap URLs in `public/_redirects`, plus `http://`, `www.` or URLs without the trailing slash. The export didn't list them, so this isn't confirmed. |
+| Discovered – currently not indexed | 5     | Tag pages Google hasn't crawled yet: `aws`, `cognito`, `drf`, `security`, `sso`.                                                                                                 |
+| Crawled – currently not indexed    | 1     | URL unknown. Check it in Search Console. If it's a republished post with `canonicalUrl` pointing to HackerNoon or dev.to, that's expected.                                       |
+
+- `aws` and `security` have 2 posts each, so they have `noindex` and aren't in the sitemap. Google found them through links on the posts. They should move to "Excluded by noindex" once crawled.
+- `cognito` (4), `drf` (3) and `sso` (6) can be indexed and are in the sitemap. They're just waiting to be crawled. If they're still not indexed in December, request indexing for them in Search Console.
+
 ## What could be next
 
 In priority order:
@@ -95,11 +116,10 @@ In priority order:
 1. **Drift compare** on the three baselined pages, to confirm the latest deploy changed only what it should.
 2. **Search Console data, from about late November 2026.** Check which pages are indexed and which queries bring traffic, then improve titles and descriptions based on that. Use `/seo google` (needs a Google API service account) or the Search Console website. This should decide most content work from here.
    - Open question: several posts are republished copies, set with `canonicalUrl`, from HackerNoon or dev.to. Search Console shows which version Google treats as the original.
-3. **Default share image.** Pages without a hero image have no `og:image`. The user deferred this on purpose. It affects link previews only, not rankings.
-4. **SSO series order.** The overview post `django-enterprise-sso-with-aws-cognito` is part 6. If it's really the introduction, making it part 1 gives the series a better starting point. Ask the user first.
-5. **Weak related link.** Okta SSO links to the OpenSearch migration only because both are tagged `security`. The user may want to retag one of them.
-6. **Loose end in the uv post.** It mentions `UV_PROJECT_ENVIRONMENT`, but no snippet sets it.
-7. **`/seo cluster <topic>`**, only when the user is planning new posts.
+3. **SSO series order.** The overview post `django-enterprise-sso-with-aws-cognito` is part 6. If it's really the introduction, making it part 1 gives the series a better starting point. Ask the user first.
+4. **Weak related link.** Okta SSO links to the OpenSearch migration only because both are tagged `security`. The user may want to retag one of them.
+5. **Loose end in the uv post.** It mentions `UV_PROJECT_ENVIRONMENT`, but no snippet sets it.
+6. **`/seo cluster <topic>`**, only when the user is planning new posts.
 
 Not worth doing:
 

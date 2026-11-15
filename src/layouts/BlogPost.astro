@@ -21,11 +21,10 @@ interface Props {
 }
 
 const { post, headings, newer, older, series = [], related = [] } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage, heroStill, tags, canonicalUrl } = post.data;
+const { title, description, pubDate, updatedDate, tags, canonicalUrl } = post.data;
 // Contents lists the h2 sections; posts structured in h3s (fewer than three h2s) list those instead.
 const h2s = headings.filter((heading) => heading.depth === 2);
 const sections = h2s.length > 2 ? h2s : headings.filter((heading) => heading.depth === 3);
-// Covers aren't shown on the page (they're dark title cards that repeat the headline); they're only the link preview.
 // Inside a series, the end-of-article links walk the series. Outside one, related essays replace the
 // archive's older/newer links, which stay only for posts with nothing related.
 const part = series.findIndex((p) => p.id === post.id);
@@ -37,7 +36,6 @@ const next = series.length ? series[part + 1] : walkArchive ? newer : undefined;
 <Layout
 	title={title}
 	description={description}
-	image={heroStill ?? heroImage}
 	published={pubDate}
 	modified={updatedDate}
 	markdown={markdownUrl(post)}
